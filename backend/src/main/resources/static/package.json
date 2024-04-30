@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "tailwindcss -i ./main.css -o ./css/output.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.19",
+    "browserslist": "^4.23.0",
+    "caniuse-lite": "^1.0.30001614"
+  }
+}
