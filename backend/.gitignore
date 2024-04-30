@@ -18,6 +18,9 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### tailwindcss output ###
+src/main/resources/static/css/output.css
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
