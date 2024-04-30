@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원 관리</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="display-flex flex-row ga m-1">
+    검색 옵션
+    <select name="searchType" id="searchType">
+        <option value="all">전체</option>
+        <option value="username" th:selected="${searchType == 'username'}">아이디</option>
+        <option value="nickname" th:selected="${searchType == 'nickname'}">닉네임</option>
+        <option value="tel" th:selected="${searchType == 'tel'}">전화번호</option>
+    </select>
+    <input type="text" class="border border-black" name="searchValue" id="searchValue" th:value="${searchValue}">
+    <input type="image" src="/img/community/search.gif" onclick="search();">
+</div>
+
+<div class="display-flex flex-row ga m-1">
+    정렬 기준
+    <select name="sortType" id="sortType" onchange="search();">
+        <option value="usernameAsc" th:selected="${sortType == 'usernameAsc'}">아이디 오름차순</option>
+        <option value="usernameDesc" th:selected="${sortType == 'usernameDesc'}">아이디 내림차순</option>
+        <option value="joinDateAsc" th:selected="${sortType == 'createdAtAsc'}">가입일 오름차순</option>
+        <option value="joinDateDesc" th:selected="${sortType == 'createdAtDesc'}">가입일 내림차순</option>
+    </select>
+</div>
+
+<div class="display-flex flex-row ga m-1">
+    <div>한페이지 행수
+        <select class="size" name="limit" id="limit" onchange="search();">
+            <option value="5" th:selected="${paging.size == 5}">5개만 보기</option>
+            <option value="10" th:selected="${paging.size == 10}">10개만 보기</option>
+            <option value="2147483647" th:selected="${paging.size == 2147483647}">전체 보기</option>
+        </select>
+    </div>
+</div>
+
+<div class="m-1">
+    <div>회원목록 <span th:text="${paging.totalElements}"></span>건</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">아이디</th>
+            <th class="border border-black">비밀번호</th>
+            <th class="border border-black">닉네임</th>
+            <th class="border border-black">권한</th>
+            <th class="border border-black">적립금</th>
+            <th class="border border-black">전화번호</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, status: ${paging}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.username()}"></td>
+            <td class="border border-black" th:text="${dto.password()}"></td>
+            <td class="border border-black" th:text="${dto.nickname()}"></td>
+            <td class="border border-black" th:text="${dto.role()}"></td>
+            <td class="border border-black" th:text="${dto.point()}"></td>
+            <td class="border border-black" th:text="${dto.tel()}"></td>
+            <td class="border border-black">
+                <button th:onclick="|deleteMember(${dto.id()});|">-</button>
+            </td>
+        </tr>
+
+        <tr class="mt-4">
+            <form action="/api/member" method="post">
+                <td class="border border-black">
+                    <input class="w-16" name="id" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="username" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="password" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="nickname" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="role">
+                        <option value="USER">회원</option>
+                        <option value="ADMIN">관리자</option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="point" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="tel" required/>
+                </td>
+                <td class="border border-black">
+                    <input type="submit" value="+"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+    <div class="mt-5">
+        <!-- 페이징처리 시작 -->
+        <div>
+            <ul class="flex flex-row gap-2">
+                <li>
+                    <a th:if="${paging.hasPrevious}" class="page-link"
+                       th:href="|?page=${paging.number-1}&limit=${paging.size}${(searchType != null)&&(searchValue != null)? '&searchType='+searchType+'&searchValue='+searchValue : '' }${(sortType != null)? '&sortType='+sortType:''}|">
+                        <span>이전</span>
+                    </a>
+                    <span class="text-gray-500" th:unless="${paging.hasPrevious}">이전</span>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                    th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                >
+                    <a th:text="${page+1}"
+                       th:href="|?page=${page}&limit=${paging.size}${(searchType != null)&&(searchValue != null)? '&searchType='+searchType+'&searchValue='+searchValue : '' }${(sortType != null)? '&sortType='+sortType:''}|"></a>
+                </li>
+                <li>
+                    <a th:if="${paging.hasNext}"
+                       th:href="|?page=${paging.number+1}&limit=${paging.size}${(searchType != null)&&(searchValue != null)? '&searchType='+searchType+'&searchValue='+searchValue : '' }${(sortType != null)? '&sortType='+sortType:''}|">
+                        <span>다음</span>
+                    </a>
+                    <span class="text-gray-500" th:unless="${paging.hasNext}">다음</span>
+                </li>
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+    </div>
+</div>
+
+<script>
+    const search = () => {
+        const searchType = document.getElementById("searchType").value;
+        const searchValue = document.getElementById("searchValue").value;
+        const sortType = document.getElementById("sortType").value;
+        const limit = document.getElementById("limit").value;
+        let destination = "/members?"
+        if (searchType) destination += "&searchType=" + searchType;
+        if (searchValue) destination += "&searchValue=" + searchValue;
+        if (sortType) destination += "&sortType=" + sortType;
+        if (limit) destination += "&limit=" + limit;
+        location.href = destination;
+    }
+
+    const deleteMember = (id) => {
+        fetch(`/api/member?id=${id}`, {method: 'DELETE'})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/members";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>
