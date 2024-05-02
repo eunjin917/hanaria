@@ -1,0 +1,404 @@
+[
+  {
+    "name": "왕돈까스버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/02/28/20240228172404280_0.png",
+    "price": 7500
+  },
+  {
+    "name": "매운 왕돈까스버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/03/06/20240306175120278_0.png",
+    "price": 7500
+  },
+  {
+    "name": "전주 비빔라이스 버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/02/03/20230203180810686_7.png",
+    "price": 6900
+  },
+  {
+    "name": "새우베이컨버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/08/11/20230811165041889_8.png",
+    "price": 5800
+  },
+  {
+    "name": "불고기 베이컨",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/07/12/20230712163805886_0.png",
+    "price": 5800
+  },
+  {
+    "name": "더블 한우불고기",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2022/06/22/202206221401250_4.png",
+    "price": 12400
+  },
+  {
+    "name": "한우불고기",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/02/10/20230210102118259_1.png",
+    "price": 8400
+  },
+  {
+    "name": "더블 클래식치즈버거(버터번)",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/03/21/20230321152358223_1.png",
+    "price": 6900
+  },
+  {
+    "name": "더블 치킨버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/03/21/20230321152101291_2.png",
+    "price": 5500
+  },
+  {
+    "name": "더블 데리버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/03/21/20230321151944859_2.png",
+    "price": 4500
+  },
+  {
+    "name": "빅불",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220163556949_8.png",
+    "price": 7100
+  },
+  {
+    "name": "불고기버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2021/07/23/20210723103917912_2.png",
+    "price": 4700
+  },
+  {
+    "name": "모짜렐라 인 더 버거 베이컨",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/03/08/20230308094308298_4.png",
+    "price": 7400
+  },
+  {
+    "name": "DoubleX2",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/08/03/20200803175039962_2.png",
+    "price": 6800
+  },
+  {
+    "name": "사각새우더블버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/12/31/20201231115111151_3.png",
+    "price": 5700
+  },
+  {
+    "name": "새우버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220163836176_9.png",
+    "price": 4700
+  },
+  {
+    "name": "리아미라클 Ⅱ",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/06/29/20230629174939232_1.png",
+    "price": 5200
+  },
+  {
+    "name": "더블리아미라클 Ⅱ",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/06/29/20230629175008857_0.png",
+    "price": 6700
+  },
+  {
+    "name": "핫크리스피버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/06/21/20230621174724947_5.png",
+    "price": 5900
+  },
+  {
+    "name": "클래식치즈버거(버터번)",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2022/05/19/20220519092203878_5.png",
+    "price": 5200
+  },
+  {
+    "name": "T-REX",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/08/03/20200803174706238_6.png",
+    "price": 4700
+  },
+  {
+    "name": "치킨버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220163929389_1.png",
+    "price": 4000
+  },
+  {
+    "name": "데리버거",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/01/02/20200102234537645_5.png",
+    "price": 3300
+  },
+  {
+    "name": "한우연인팩",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/03/06/20240306175314902_9.png",
+    "price": 15500
+  },
+  {
+    "name": "한우명품팩",
+    "category": "햄버거",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/03/06/20240306174702433_4.png",
+    "price": 17300
+  },
+  {
+    "name": "깡돼후 돼지후라이드",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/10/16/20231016171749136_1.png",
+    "price": 6500
+  },
+  {
+    "name": "포테이토",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082733361_7.png",
+    "price": 1800
+  },
+  {
+    "name": "양념감자",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/04/25/2024042510562617_4.png",
+    "price": 2300
+  },
+  {
+    "name": "포테이토(L)",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082753580_3.png",
+    "price": 2200
+  },
+  {
+    "name": "웨지포테이토",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2021/08/06/2021080616332033_9.png",
+    "price": 2100
+  },
+  {
+    "name": "치즈스틱",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/02/10/20230210095941527_7.png",
+    "price": 2400
+  },
+  {
+    "name": "롱치즈스틱",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220164604550_2.png",
+    "price": 2000
+  },
+  {
+    "name": "치킨너겟",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/08/31/20230831152303264_0.png",
+    "price": 2700
+  },
+  {
+    "name": "통오징어링",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/02/10/20230210180512639_0.png",
+    "price": 2600
+  },
+  {
+    "name": "콘샐러드",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220165256349_5.png",
+    "price": 1900
+  },
+  {
+    "name": "쉑쉑치킨",
+    "category": "디저트",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/04/25/20240425105636969_0.png",
+    "price": 2900
+  },
+  {
+    "name": "화이어윙",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/06/21/20230621175453874_9.png",
+    "price": 3100
+  },
+  {
+    "name": "치킨휠레",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/11/03/20201103152232421_6.png",
+    "price": 3100
+  },
+  {
+    "name": "치킨 1조각",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/11/03/20201103152250708_4.png",
+    "price": 2800
+  },
+  {
+    "name": "패밀리팩",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220165832879_9.png",
+    "price": 14800
+  },
+  {
+    "name": "순살치킨 하프팩(11조각)",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220165930895_6.png",
+    "price": 9800
+  },
+  {
+    "name": "순살치킨 풀팩(22조각)",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220165904235_1.png",
+    "price": 16800
+  },
+  {
+    "name": "치킨 하프팩(4조각)",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220165808563_4.png",
+    "price": 10500
+  },
+  {
+    "name": "치킨 풀팩(9조각)",
+    "category": "치킨",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220165713242_4.png",
+    "price": 20000
+  },
+  {
+    "name": "캐모마일 티",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/10/16/20231016172002216_1.png",
+    "price": 2000
+  },
+  {
+    "name": "애플 캐모마일 티",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/10/16/20231016172018281_6.png",
+    "price": 2700
+  },
+  {
+    "name": "콜라",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2024/02/28/20240228145257542_2.png",
+    "price": 2000
+  },
+  {
+    "name": "사이다",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082314449_3.png",
+    "price": 2000
+  },
+  {
+    "name": "제로슈거콜라",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/03/14/202303141158073_1.png",
+    "price": 2000
+  },
+  {
+    "name": "자두쿨 에이드",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/06/21/20230621135636153_1.png",
+    "price": 2700
+  },
+  {
+    "name": "복숭아 홍차 에이드(R)",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/04/11/20230411173153656_3.png",
+    "price": 2700
+  },
+  {
+    "name": "아이스티",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220170402250_4.png",
+    "price": 2300
+  },
+  {
+    "name": "레몬에이드",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/20/20191220170737990_4.png",
+    "price": 2700
+  },
+  {
+    "name": "아메리카노",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082410705_2.png",
+    "price": 2500
+  },
+  {
+    "name": "아이스 아메리카노",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/01/07/20200107134212451_0.png",
+    "price": 2500
+  },
+  {
+    "name": "카페라떼",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082451588_1.png",
+    "price": 3000
+  },
+  {
+    "name": "아이스 카페라떼",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2019/12/23/20191223132742119_7.png",
+    "price": 3000
+  },
+  {
+    "name": "오렌지주스(PET)",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/03/26/2020032610450342_0.png",
+    "price": 2500
+  },
+  {
+    "name": "우유",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082430265_0.png",
+    "price": 1500
+  },
+  {
+    "name": "핫초코",
+    "category": "음료/커피",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922082554944_3.png",
+    "price": 2500
+  },
+  {
+    "name": "소프트콘",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/12/29/20231229095301797_2.png",
+    "price": 900
+  },
+  {
+    "name": "토네이도 초코쿠키",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922101521993_8.png",
+    "price": 2800
+  },
+  {
+    "name": "토네이도 스트로베리",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2020/09/22/20200922101537109_4.png",
+    "price": 2800
+  },
+  {
+    "name": "토네이도 더블초코",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/12/27/20231227100111468_8.png",
+    "price": 2800
+  },
+  {
+    "name": "선데아이스크림 플레인",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/12/29/20231229095215766_5.png",
+    "price": 1900
+  },
+  {
+    "name": "선데아이스크림 스트로베리",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/12/29/20231229094520247_5.png",
+    "price": 1900
+  },
+  {
+    "name": "선데 허쉬초코",
+    "category": "아이스샷",
+    "imgURL": "https://img.lotteeatz.com/upload/product/2023/12/29/20231229095245500_8.png",
+    "price": 1900
+  }
+]
