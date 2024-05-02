@@ -8,7 +8,11 @@
 </head>
 
 <body>
-<div class="display-flex flex-row ga m-1">
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+
+<div class="display-flex flex-row gap-1 m-1">
     검색 옵션
     <select name="searchType" id="searchType">
         <option value="all">전체</option>
@@ -17,7 +21,7 @@
         <option value="tel" th:selected="${searchType == 'tel'}">전화번호</option>
     </select>
     <input type="text" class="border border-black" name="searchValue" id="searchValue" th:value="${searchValue}">
-    <input type="image" src="/img/community/search.gif" onclick="search();">
+    <input type="button" onclick="search();" value="검색"/>
 </div>
 
 <div class="display-flex flex-row ga m-1">
@@ -108,7 +112,7 @@
     </table>
     <div class="mt-5">
         <!-- 페이징처리 시작 -->
-        <div>
+        <div th:if="${paging.getTotalPages > 1}">
             <ul class="flex flex-row gap-2">
                 <li>
                     <a th:if="${paging.hasPrevious}" class="page-link"
@@ -117,8 +121,8 @@
                     </a>
                     <span class="text-gray-500" th:unless="${paging.hasPrevious}">이전</span>
                 </li>
-                <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                    th:if="${page >= paging.number-5 and page <= paging.number+5}"
+                <li th:each="page: ${#numbers.sequence(0, paging.getTotalPages() - 1)}"
+                    th:if="${page >= paging.number -5 and page <= paging.number+5}"
                 >
                     <a th:text="${page+1}"
                        th:href="|?page=${page}&limit=${paging.size}${(searchType != null)&&(searchValue != null)? '&searchType='+searchType+'&searchValue='+searchValue : '' }${(sortType != null)? '&sortType='+sortType:''}|"></a>
