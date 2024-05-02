@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원 상세</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>회원 상세</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">아이디</th>
+            <th class="border border-black">비밀번호</th>
+            <th class="border border-black">닉네임</th>
+            <th class="border border-black">권한</th>
+            <th class="border border-black">적립금</th>
+            <th class="border border-black">전화번호</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form name="memberUpdateForm">
+                <td class="border border-black">
+                    <input class="w-16 p-1" name="memberId" th:value="${member.id()}" disabled/>
+                </td>
+                <td class="border border-black p-1"
+                    th:text="${#temporals.format(member.createdAt(),'MM.dd HH:mm')}">
+                </td>
+                <td class="border border-black">
+                    <input class="w-16 p-1" name="username" th:value="${member.username()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16 p-1" name="password" th:value="${member.password()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16 p-1" name="nickname" th:value="${member.nickname()}" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="role">
+                        <option value="USER" th:selected="${member.role().name().equals('USER')}">사용자</option>
+                        <option value="ADMIN" th:selected="${member.role().name().equals('ADMIN')}">관리자</option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16 p-1" name="point" th:value="${member.point()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48 p-1" name="tel" th:value="${member.tel()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input type="button" value="수정" onclick="updateMember()"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/members">목록으로</a>
+</div>
+
+<script>
+    const updateMember = () => {
+        const form = document.forms["memberUpdateForm"];
+        if (!form) return;
+        const memberId = form["memberId"];
+        const username = form["username"];
+        const password = form["password"];
+        const nickname = form["nickname"];
+        const role = form["role"];
+        const point = form["point"];
+        const tel = form["tel"];
+
+        const checkList = [
+            [memberId, "사용자 ID 정보에 문제가 있습니다."],
+            [username, "아이디를 입력해 주세요."],
+            [password, "비밀번호를 입력해 주세요."],
+            [nickname, "닉네임을 입력해 주세요."],
+            [role, "권한을 선택해 주세요."],
+            [point, "적립금을 입력해 주세요."],
+            [tel, "전화번호를 입력해 주세요."]
+        ];
+        for (const [input, label] of checkList) {
+            if (input.value === "") {
+                alert(label);
+                input.focus();
+                return;
+            }
+        }
+        fetch(`/api/member`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                memberId: memberId.value,
+                username: username.value,
+                password: password.value,
+                nickname: nickname.value,
+                role: role.value,
+                point: point.value,
+                tel: tel.value,
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/members";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>

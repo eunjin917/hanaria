@@ -61,16 +61,19 @@
         </thead>
         <tbody>
         <tr th:each="dto, status: ${paging}">
-            <td class="border border-black" th:text="${dto.id()}"></td>
-            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
-            <td class="border border-black" th:text="${dto.username()}"></td>
-            <td class="border border-black" th:text="${dto.password()}"></td>
-            <td class="border border-black" th:text="${dto.nickname()}"></td>
-            <td class="border border-black" th:text="${dto.role()}"></td>
-            <td class="border border-black" th:text="${dto.point()}"></td>
-            <td class="border border-black" th:text="${dto.tel()}"></td>
-            <td class="border border-black">
-                <button th:onclick="|deleteMember(${dto.id()});|">-</button>
+            <td class="border border-black p-1" th:text="${dto.id()}"></td>
+            <td class="border border-black p-1" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black p-1" th:text="${dto.username()}"></td>
+            <td class="border border-black p-1" th:text="${dto.password()}"></td>
+            <td class="border border-black p-1" th:text="${dto.nickname()}"></td>
+            <td class="border border-black p-1" th:text="${dto.role().getValue_ko()}"></td>
+            <td class="border border-black p-1" th:text="${dto.point()}"></td>
+            <td class="border border-black p-1" th:text="${dto.tel()}"></td>
+            <td class="border border-black p-1">
+                <a th:href="|/member/${dto.id()}|">수정</a>
+            </td>
+            <td class="border border-black p-1">
+                <button th:onclick="|deleteMember(${dto.id()});|">삭제</button>
             </td>
         </tr>
 
@@ -93,7 +96,7 @@
                 </td>
                 <td class="border border-black">
                     <select name="role">
-                        <option value="USER">회원</option>
+                        <option value="USER">사용자</option>
                         <option value="ADMIN">관리자</option>
                     </select>
                 </td>
@@ -104,7 +107,7 @@
                     <input class="w-16" name="tel" required/>
                 </td>
                 <td class="border border-black">
-                    <input type="submit" value="+"/>
+                    <input type="submit" value="추가"/>
                 </td>
             </form>
         </tr>

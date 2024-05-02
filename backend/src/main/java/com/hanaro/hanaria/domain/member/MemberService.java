@@ -1,7 +1,6 @@
 package com.hanaro.hanaria.domain.member;
 
-import com.hanaro.hanaria.dto.member.MemberJoinRequestDto;
-import com.hanaro.hanaria.dto.member.MemberFindAllResponseDto;
+import com.hanaro.hanaria.dto.member.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +9,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -17,6 +18,12 @@ public class MemberService {
 
     @Transactional
     public boolean join(MemberJoinRequestDto dto) {
+        Long idx = memberRepository.save(dto.toEntity()).getId();
+        return memberRepository.existsById(idx);
+    }
+
+    @Transactional
+    public boolean create(MemberCreateRequestDto dto) {
         Long idx = memberRepository.save(dto.toEntity()).getId();
         return memberRepository.existsById(idx);
     }
@@ -41,8 +48,21 @@ public class MemberService {
     }
 
     @Transactional
+    public boolean update(MemberUpdateRequestDto dto) {
+        Optional<Member> optional = memberRepository.findById(dto.memberId());
+        if (optional.isEmpty()) return false;
+        memberRepository.save(dto.toApplied(optional.get()));
+        return true;
+    }
+
+    @Transactional
     public boolean deleteById(Long id) {
         memberRepository.deleteById(id);
         return !memberRepository.existsById(id);
+    }
+
+    public MemberFindByIdResponseDto findById(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow();
+        return new MemberFindByIdResponseDto(member);
     }
 }
