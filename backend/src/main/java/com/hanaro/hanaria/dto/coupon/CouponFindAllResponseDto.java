@@ -23,7 +23,6 @@ public record CouponFindAllResponseDto(
                 entity.getName(),
                 entity.getNameEn(),
                 entity.getPrice(),
-                entity.getProduct(),
                 new ProductFindByIdResponseDto(entity.getProduct())
         );
     }
