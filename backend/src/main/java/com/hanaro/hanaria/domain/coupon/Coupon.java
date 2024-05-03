@@ -1,4 +1,4 @@
-package com.hanaro.hanaria.domain;
+package com.hanaro.hanaria.domain.coupon;
 
 import com.hanaro.hanaria.domain.product.Product;
 import jakarta.persistence.*;

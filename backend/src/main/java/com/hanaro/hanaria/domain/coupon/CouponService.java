@@ -1,6 +1,6 @@
-package com.hanaro.hanaria.domain;
+package com.hanaro.hanaria.domain.coupon;
 
-import com.hanaro.hanaria.dto.CouponFindAllResponseDto;
+import com.hanaro.hanaria.dto.coupon.CouponFindAllResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

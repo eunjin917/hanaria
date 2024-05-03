@@ -1,4 +1,4 @@
-package com.hanaro.hanaria.domain;
+package com.hanaro.hanaria.domain.coupon;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

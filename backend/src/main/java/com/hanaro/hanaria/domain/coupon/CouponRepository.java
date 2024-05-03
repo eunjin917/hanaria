@@ -1,4 +1,4 @@
-package com.hanaro.hanaria.domain;
+package com.hanaro.hanaria.domain.coupon;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

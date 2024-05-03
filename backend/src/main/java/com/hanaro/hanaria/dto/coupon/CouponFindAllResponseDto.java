@@ -1,7 +1,6 @@
-package com.hanaro.hanaria.dto;
+package com.hanaro.hanaria.dto.coupon;
 
-import com.hanaro.hanaria.domain.Coupon;
-import com.hanaro.hanaria.domain.product.Product;
+import com.hanaro.hanaria.domain.coupon.Coupon;
 import com.hanaro.hanaria.dto.product.ProductFindByIdResponseDto;
 
 import java.time.LocalDateTime;
