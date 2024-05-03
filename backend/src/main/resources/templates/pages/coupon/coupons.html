@@ -29,7 +29,7 @@
         <tr th:each="dto, status: ${list}">
             <td class="border border-black" th:text="${dto.id()}"></td>
             <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
-            <td class="border border-black" th:text="${#temporals.format(dto.expiredAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.expiredAt(), 'MM.dd HH:mm')}"></td>
             <td class="border border-black" th:text="${dto.name()}"></td>
             <td class="border border-black" th:text="${dto.nameEn()}"></td>
             <td class="border border-black" th:text="${dto.price()}"></td>
