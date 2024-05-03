@@ -17,19 +17,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Coupon {
     @Id
-    @Column(name = "product_id")
+    @Column(name = "coupon_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    @Column(name = "product_created_at")
+    @Column(name = "coupon_created_at")
     @Builder.Default
     LocalDateTime createdAt = LocalDateTime.now();
-    @Column(name = "product_expired_at")
+    @Column(name = "coupon_expired_at")
     LocalDateTime expiredAt;
-    @Column(name = "product_name")
+    @Column(name = "coupon_name")
     String name;
-    @Column(name = "product_name_en")
+    @Column(name = "coupon_name_en")
     String nameEn;
-    @Column(name = "product_price")
+    @Column(name = "coupon_price")
     Integer price;
     @ManyToOne
     @JoinColumn(name = "product_id", unique = false)
