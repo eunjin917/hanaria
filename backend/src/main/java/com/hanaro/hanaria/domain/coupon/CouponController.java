@@ -13,8 +13,8 @@ import java.util.List;
 public class CouponController {
     private final CouponService couponService;
 
-    @GetMapping("/products")
-    public String adminProducts(Model model
+    @GetMapping("/coupons")
+    public String adminCoupons(Model model
     ) {
         List<CouponFindAllResponseDto> couponFindAllResponseDtoList = couponService.findAll();
         model.addAttribute("list", couponFindAllResponseDtoList);
