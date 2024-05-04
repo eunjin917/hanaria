@@ -49,4 +49,10 @@ public class CouponService {
         couponRepository.save(dto.toApplied(optional.get(), product));
         return true;
     }
+
+    @Transactional
+    public boolean deleteById(Long id) {
+        couponRepository.deleteById(id);
+        return !couponRepository.existsById(id);
+    }
 }

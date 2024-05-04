@@ -33,4 +33,14 @@ public class CouponApiController {
             return ResponseEntity.internalServerError().body("존재하지 않는 쿠폰입니다.");
         }
     }
+
+    @DeleteMapping("/coupon")
+    public ResponseEntity<String> adminCouponDelete(@RequestParam(name = "id") Long id) {
+        boolean isDeleted = couponService.deleteById(id);
+        if (isDeleted) {
+            return ResponseEntity.ok("쿠폰이 삭제되었습니다.");
+        } else {
+            return ResponseEntity.internalServerError().body("쿠폰 삭제에 실패하였습니다.");
+        }
+    }
 }
