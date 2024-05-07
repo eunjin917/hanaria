@@ -6,6 +6,7 @@ import com.hanaro.hanaria.domain.order.OrderRepository;
 import com.hanaro.hanaria.dto.payment.PaymentCreateRequestDto;
 import com.hanaro.hanaria.dto.payment.PaymentFindAllResponseDto;
 import com.hanaro.hanaria.dto.payment.PaymentFindByIdResponseDto;
+import com.hanaro.hanaria.dto.payment.PaymentFindByOrderIdResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,4 +48,8 @@ public class PaymentService {
         return !paymentRepository.existsById(id);
     }
 
+    public List<PaymentFindByOrderIdResponseDto> findByOrderId(Long id) {
+        List<Payment> paymentList = paymentRepository.findAllByOrderId(id);
+        return paymentList.stream().map(PaymentFindByOrderIdResponseDto::new).toList();
+    }
 }

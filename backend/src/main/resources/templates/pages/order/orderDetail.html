@@ -71,6 +71,30 @@
         </tr>
         </tbody>
     </table>
+    <div>결제정보 <span th:text="${payments.size()}"></span>건</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">카드종류</th>
+            <th class="border border-black">승인번호</th>
+            <th class="border border-black">가격</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, status: ${payments}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.cardType()}"></td>
+            <td class="border border-black" th:text="${dto.approvalNo()}"></td>
+            <td class="border border-black" th:text="${dto.price()}"></td>
+            <td class="border border-black p-1">
+                <button th:onclick="|deletePayment(${dto.id()});|">삭제</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div>
     <a href="/orders">목록으로</a>
@@ -124,6 +148,24 @@
                 console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
             });
     }
+
+    const deletePayment = (id) => {
+        fetch(`/api/payment?id=${id}`, {method: 'DELETE'})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+
 </script>
 </body>
 </html>

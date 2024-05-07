@@ -34,6 +34,9 @@
             <td class="border border-black"
                 th:text="${dto.order() != null? dto.order().id()+': '+dto.order().code() : '주문정보 없음'}"></td>
             <td class="border border-black p-1">
+                <a th:href="|/order/${dto.order().id()}|">주문정보</a>
+            </td>
+            <td class="border border-black p-1">
                 <button th:onclick="|deletePayment(${dto.id()});|">삭제</button>
             </td>
         </tr>
@@ -46,13 +49,13 @@
                     <input class="w-16" name="createdAt" disabled/>
                 </td>
                 <td class="border border-black p-1">
-                    <input class="w-16" name="cardType"/>
+                    <input class="w-16" name="cardType" required/>
                 </td>
                 <td class="border border-black p-1">
                     <input class="w-16" name="approvalNo" disabled/>
                 </td>
                 <td class="border border-black p-1">
-                    <input class="w-16" type="number" name="price"/>
+                    <input class="w-16" type="number" name="price" required/>
                 </td>
                 <td class="border border-black">
                     <select name="orderId">

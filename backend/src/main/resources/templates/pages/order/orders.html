@@ -39,7 +39,7 @@
             <td class="border border-black" th:text="${dto.status().getValue_ko()}"></td>
             <td class="border border-black" th:text="${dto.member() != null? dto.member().nickname() : '비회원'}"></td>
             <td class="border border-black p-1">
-                <a th:href="|/order/${dto.id()}|">수정</a>
+                <a th:href="|/order/${dto.id()}|">상세/수정</a>
             </td>
             <td class="border border-black p-1">
                 <button th:onclick="|deleteOrder(${dto.id()});|">삭제</button>
