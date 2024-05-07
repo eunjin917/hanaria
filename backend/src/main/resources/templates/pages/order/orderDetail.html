@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>주문 상세</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>주문 상세</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">주문코드</th>
+            <th class="border border-black">결제일시</th>
+            <th class="border border-black">임시번호</th>
+            <th class="border border-black">총가격</th>
+            <th class="border border-black">방법</th>
+            <th class="border border-black">상태</th>
+            <th class="border border-black">회원</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form name="orderUpdateForm">
+                <td class="border border-black">
+                    <input class="w-16" name="orderId" th:value="${order.id()}" disabled/>
+                </td>
+                <td class="border border-black" th:text="${#temporals.format(order.createdAt(),'MM.dd HH:mm')}"></td>
+                <td class="border border-black" th:text="${order.code()}"></td>
+                <td class="border border-black" th:text="${#temporals.format(order.paidAt(),'MM.dd HH:mm')}"></td>
+                <td class="border border-black" th:text="${order.tmpNo()}"></td>
+                <td class="border border-black" th:text="${order.price()}"></td>
+                <td class="border border-black">
+                    <select name="method">
+                        <option th:each="method, status: ${methods}" th:value="${method.name()}"
+                                th:text="${method.getValue_ko()}" th:selected="${order.method().equals(method)}">
+                            주문방법
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="status">
+                        <option th:each="status, _: ${statuses}" th:value="${status.name()}"
+                                th:text="${status.getValue_ko()}" th:selected="${order.status().equals(status)}">
+                            주문상태
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="memberId">
+                        <option value="-1" th:selected="${order.member() == null}">비회원</option>
+                        <option th:each="member, status: ${members}" th:value="${member.id()}"
+                                th:text="${member.nickname()}"
+                                th:selected="${order.member() != null && order.member().id() == member.id()}">
+                            사용자
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="button" value="수정" onclick="updateOrder()"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/orders">목록으로</a>
+</div>
+
+<script>
+    const updateOrder = () => {
+        const form = document.forms["orderUpdateForm"];
+        if (!form) return;
+        const orderId = form["orderId"];
+        const method = form["method"];
+        const status = form["status"];
+        const memberId = form["memberId"];
+
+        const checkList = [
+            [orderId, "주문 ID 정보에 문제가 있습니다."],
+            [method, "주문방법을 선택해 주세요."],
+            [status, "주문상태를 선택해 주세요."],
+            [memberId, "회원을 선택해 주세요."],
+        ];
+        for (const [input, label] of checkList) {
+            if (input.value === "") {
+                alert(label);
+                input.focus();
+                return;
+            }
+        }
+        fetch(`/api/order`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                orderId: orderId.value,
+                method: method.value,
+                status: status.value,
+                memberId: memberId.value,
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/orders";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>

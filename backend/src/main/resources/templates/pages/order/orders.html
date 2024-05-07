@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>주문 관리</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>주문 <span th:text="${list.size()}"></span>건</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">주문코드</th>
+            <th class="border border-black">결제일시</th>
+            <th class="border border-black">임시번호</th>
+            <th class="border border-black">총가격</th>
+            <th class="border border-black">방법</th>
+            <th class="border border-black">상태</th>
+            <th class="border border-black">회원</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, status: ${list}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.code()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.paidAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.tmpNo()}"></td>
+            <td class="border border-black" th:text="${dto.price()}"></td>
+            <td class="border border-black" th:text="${dto.method().getValue_ko()}"></td>
+            <td class="border border-black" th:text="${dto.status().getValue_ko()}"></td>
+            <td class="border border-black" th:text="${dto.member() != null? dto.member().nickname() : '비회원'}"></td>
+            <td class="border border-black p-1">
+                <a th:href="|/order/${dto.id()}|">수정</a>
+            </td>
+            <td class="border border-black p-1">
+                <button th:onclick="|deleteOrder(${dto.id()});|">삭제</button>
+            </td>
+        </tr>
+        <tr>
+            <form action="/api/order" method="post">
+                <td class="border border-black">
+                    <input class="w-16" name="optionId" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="code" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="paidAt" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="tmpNo" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16" name="price" disabled/>
+                </td>
+                <td class="border border-black">
+                    <select name="method">
+                        <option th:each="method, status: ${methods}" th:value="${method.name()}"
+                                th:text="${method.getValue_ko()}">
+                            주문방법
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="status">
+                        <option th:each="status, _: ${statuses}" th:value="${status.name()}"
+                                th:text="${status.getValue_ko()}">
+                            주문상태
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="memberId">
+                        <option value="-1">비회원</option>
+                        <option th:each="member, status: ${members}" th:value="${member.id()}"
+                                th:text="${member.nickname()}">
+                            사용자
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="submit" value="추가"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const deleteOrder = (id) => {
+        fetch(`/api/order?id=${id}`, {method: 'DELETE'})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/orders";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+
+</script>
+</body>
+</html>
