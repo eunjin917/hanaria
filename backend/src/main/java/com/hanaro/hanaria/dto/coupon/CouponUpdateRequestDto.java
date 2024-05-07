@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public record CouponUpdateRequestDto(
         Long couponId,
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
         String name,
         String nameEn,
@@ -16,6 +17,7 @@ public record CouponUpdateRequestDto(
     public Coupon toApplied(Coupon coupon, Product product) {
         return Coupon.builder()
                 .id(couponId)
+                .validAt(validAt)
                 .expiredAt(expiredAt)
                 .name(name)
                 .nameEn(nameEn)

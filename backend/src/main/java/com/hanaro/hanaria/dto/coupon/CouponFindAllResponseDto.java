@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public record CouponFindAllResponseDto(
         Long id,
         LocalDateTime createdAt,
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
         String name,
         String nameEn,
@@ -18,6 +19,7 @@ public record CouponFindAllResponseDto(
         this(
                 entity.getId(),
                 entity.getCreatedAt(),
+                entity.getValidAt(),
                 entity.getExpiredAt(),
                 entity.getName(),
                 entity.getNameEn(),

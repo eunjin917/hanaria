@@ -6,6 +6,7 @@ import com.hanaro.hanaria.domain.product.Product;
 import java.time.LocalDateTime;
 
 public record CouponCreateRequestDto(
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
         String name,
         String nameEn,
@@ -14,6 +15,7 @@ public record CouponCreateRequestDto(
 ) {
     public Coupon toEntity(Product product) {
         return Coupon.builder()
+                .validAt(validAt)
                 .expiredAt(expiredAt)
                 .name(name)
                 .nameEn(nameEn)

@@ -18,6 +18,7 @@
         <tr>
             <th class="border border-black">ID</th>
             <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
             <th class="border border-black">만료일시</th>
             <th class="border border-black">이름</th>
             <th class="border border-black">영어이름</th>
@@ -33,6 +34,9 @@
                 </td>
                 <td class="border border-black">
                     <input class="w-16" name="createdAt" th:value="${coupon.createdAt()}" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" th:value="${coupon.validAt()}" type="datetime-local" required/>
                 </td>
                 <td class="border border-black">
                     <input class="w-48" name="expiredAt" th:value="${coupon.expiredAt()}" type="datetime-local" required/>
@@ -70,6 +74,7 @@
         const form = document.forms["couponUpdateForm"];
         if (!form) return;
         const couponId = form["couponId"];
+        const validAt = form["validAt"];
         const expiredAt = form["expiredAt"];
         const name = form["name"];
         const nameEn = form["nameEn"];
@@ -78,7 +83,8 @@
 
         const checkList = [
             [couponId, "쿠폰 ID 정보에 문제가 있습니다."],
-            [expiredAt, "유효기간을 입력해 주세요."],
+            [validAt, "유효일시를 입력해 주세요."],
+            [expiredAt, "만료일시를 입력해 주세요."],
             [name, "이름을 입력해 주세요."],
             [nameEn, "영어이름을 입력해 주세요."],
             [price, "가격을 입력해 주세요."],
@@ -98,6 +104,7 @@
             },
             body: JSON.stringify({
                 productId: productId.value,
+                validAt: validAt.value,
                 expiredAt: expiredAt.value,
                 name: name.value,
                 nameEn: nameEn.value,
