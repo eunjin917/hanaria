@@ -27,7 +27,7 @@ public class Option {
     Integer price;
     @Column(name = "option_category")
     OptionCategory category;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "product_id", unique = false)
     Product product;
 }
