@@ -8,15 +8,17 @@ import java.time.LocalDateTime;
 
 
 public record MemberCouponCreateRequestDto(
-        LocalDateTime createdAt,
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
+        LocalDateTime usedAt,
         Long memberId,
         Long couponId
 ) {
     public MemberCoupon toEntity(Member member, Coupon coupon) {
         return MemberCoupon.builder()
-                .createdAt(createdAt)
+                .validAt(validAt)
                 .expiredAt(expiredAt)
+                .usedAt(usedAt)
                 .member(member)
                 .coupon(coupon)
                 .build();

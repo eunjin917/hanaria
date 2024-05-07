@@ -7,15 +7,21 @@ import com.hanaro.hanaria.dto.member.MemberFindByIdResponseDto;
 import java.time.LocalDateTime;
 
 public record MemberCouponFindByIdResponseDto (
+        Long id,
         LocalDateTime createdAt,
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
+        LocalDateTime usedAt,
         MemberFindByIdResponseDto member,
         CouponFindByIdResponseDto coupon
 ) {
     public MemberCouponFindByIdResponseDto(MemberCoupon entity) {
         this(
+                entity.getId(),
                 entity.getCreatedAt(),
+                entity.getValidAt(),
                 entity.getExpiredAt(),
+                entity.getUsedAt(),
                 new MemberFindByIdResponseDto(entity.getMember()),
                 new CouponFindByIdResponseDto(entity.getCoupon())
         );

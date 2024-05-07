@@ -28,19 +28,19 @@ public class MemberCouponApiController {
     public ResponseEntity<String> adminMemberCouponUpdate(@RequestBody MemberCouponUpdateRequestDto dto) {
         boolean isUpdated = memberCouponService.update(dto);
         if (isUpdated) {
-            return ResponseEntity.ok("쿠폰정보가 수정되었습니다.");
+            return ResponseEntity.ok("회원쿠폰정보가 수정되었습니다.");
         } else {
-            return ResponseEntity.internalServerError().body("존재하지 않는 쿠폰입니다.");
+            return ResponseEntity.internalServerError().body("존재하지 않는 회원쿠폰입니다.");
         }
     }
 
     @DeleteMapping("/member-coupon")
-    public ResponseEntity<String> adminMemberCouponDelete(@RequestParam(name = "memberId") Long memberId, @RequestParam(name = "couponId") Long couponId) {
-        boolean isDeleted = memberCouponService.deleteByMemberIdAndCouponId(memberId, couponId);
+    public ResponseEntity<String> adminMemberCouponDelete(@RequestParam(name = "id") Long id) {
+        boolean isDeleted = memberCouponService.deleteById(id);
         if (isDeleted) {
-            return ResponseEntity.ok("쿠폰이 삭제되었습니다.");
+            return ResponseEntity.ok("회원쿠폰이 삭제되었습니다.");
         } else {
-            return ResponseEntity.internalServerError().body("쿠폰 삭제에 실패하였습니다.");
+            return ResponseEntity.internalServerError().body("회원쿠폰 삭제에 실패하였습니다.");
         }
     }
 }

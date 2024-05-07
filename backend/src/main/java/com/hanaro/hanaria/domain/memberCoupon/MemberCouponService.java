@@ -39,8 +39,8 @@ public class MemberCouponService {
     }
 
     @Transactional(readOnly = true)
-    public MemberCouponFindByIdResponseDto findByMemberIdAndCouponId(Long memberId, Long couponId) {
-        return new MemberCouponFindByIdResponseDto(memberCouponRepository.findByMemberIdAndCouponId(memberId, couponId).orElseThrow());
+    public MemberCouponFindByIdResponseDto findById(Long id) {
+        return new MemberCouponFindByIdResponseDto(memberCouponRepository.findById(id).orElseThrow());
     }
 
     @Transactional(readOnly = true)
@@ -52,15 +52,15 @@ public class MemberCouponService {
     public boolean update(MemberCouponUpdateRequestDto dto) {
         Member member = memberRepository.findById(dto.memberId()).orElseThrow();
         Coupon coupon = couponRepository.findById(dto.couponId()).orElseThrow();
-        Optional<MemberCoupon> optional = memberCouponRepository.findByMemberIdAndCouponId(dto.memberId(), dto.couponId());
+        Optional<MemberCoupon> optional = memberCouponRepository.findById(dto.memberCouponId());
         if (optional.isEmpty()) return false;
         memberCouponRepository.save(dto.toApplied(optional.get(), member, coupon));
         return true;
     }
 
     @Transactional
-    public boolean deleteByMemberIdAndCouponId(Long memberId, Long couponId) {
-        memberCouponRepository.deleteByMemberIdAndCouponId(memberId, couponId);
-        return !memberCouponRepository.existsByMemberIdAndCouponId(memberId, couponId);
+    public boolean deleteById(Long id) {
+        memberCouponRepository.deleteById(id);
+        return !memberCouponRepository.existsById(id);
     }
 }

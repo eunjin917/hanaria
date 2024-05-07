@@ -16,19 +16,24 @@ import java.time.LocalDateTime;
 @Table(name = "member_coupon")
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(MemberCoupon.class)
 public class MemberCoupon {
     @Id
+    @Column(name="member_coupon_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
     @ManyToOne
-    @JoinColumn(name = "member_id", unique = false)
+    @JoinColumn(name = "member_id")
     Member member;
-    @Id
     @ManyToOne
-    @JoinColumn(name = "coupon_id", unique = false)
+    @JoinColumn(name = "coupon_id")
     Coupon coupon;
     @Column(name = "member_coupon_created_at")
     @Builder.Default
     LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "member_coupon_valid_at")
+    LocalDateTime validAt;
     @Column(name = "member_coupon_expired_at")
     LocalDateTime expiredAt;
+    @Column(name = "member_coupon_used_at")
+    LocalDateTime usedAt;
 }

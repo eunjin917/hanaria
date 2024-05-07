@@ -16,33 +16,48 @@
     <table class="border-collapse text-center">
         <thead>
         <tr>
+            <th class="border border-black">ID</th>
             <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
             <th class="border border-black">만료일시</th>
+            <th class="border border-black">사용일시</th>
             <th class="border border-black">회원</th>
             <th class="border border-black">쿠폰</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="dto, status: ${list}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
             <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.validAt(), 'MM.dd HH:mm')}"></td>
             <td class="border border-black" th:text="${#temporals.format(dto.expiredAt(), 'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.usedAt(), 'MM.dd HH:mm')}"></td>
             <td class="border border-black" th:text="${dto.member().username()}"></td>
             <td class="border border-black" th:text="${dto.coupon().name()}"></td>
             <td class="border border-black p-1">
-                <a th:href="|/member-coupon/${dto.member().id()}/${dto.coupon().id()}|">수정</a>
+                <a th:href="|/member-coupon/${dto.id()}|">수정</a>
             </td>
             <td class="border border-black p-1">
-                <button th:onclick="|deleteMemberCoupon(${dto.member().id()}, ${dto.coupon().id()});|">삭제</button>
+                <button th:onclick="|deleteMemberCoupon(${dto.id()});|">삭제</button>
             </td>
         </tr>
 
         <tr>
             <form action="/api/member-coupon" method="post">
                 <td class="border border-black">
-                    <input class="w-48" name="createdAt" type="datetime-local" required/>
+                    <input class="w-16" name="memberCouponId" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" type="datetime-local" required/>
                 </td>
                 <td class="border border-black">
                     <input class="w-48" name="expiredAt" type="datetime-local" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="usedAt" type="datetime-local"/>
                 </td>
                 <td class="border border-black">
                     <select name="memberId">
@@ -68,8 +83,8 @@
 </div>
 
 <script>
-    const deleteMemberCoupon = (memberId, couponId) => {
-        fetch(`/api/member-coupon?memberId=${memberId}&couponId=${couponId}`, {method: 'DELETE'})
+    const deleteMemberCoupon = (id) => {
+        fetch(`/api/member-coupon?id=${id}`, {method: 'DELETE'})
             .then(response => {
                 if (!response.ok) {
                     throw new Error('서버 오류가 발생했습니다.');
