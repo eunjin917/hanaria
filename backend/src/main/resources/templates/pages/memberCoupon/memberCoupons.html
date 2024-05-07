@@ -17,7 +17,9 @@
         <thead>
         <tr>
             <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
             <th class="border border-black">만료일시</th>
+            <th class="border border-black">사용일시</th>
             <th class="border border-black">회원</th>
             <th class="border border-black">쿠폰</th>
         </tr>
@@ -25,7 +27,9 @@
         <tbody>
         <tr th:each="dto, status: ${list}">
             <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.validAt(), 'MM.dd HH:mm')}"></td>
             <td class="border border-black" th:text="${#temporals.format(dto.expiredAt(), 'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.usedAt(), 'MM.dd HH:mm')}"></td>
             <td class="border border-black" th:text="${dto.member().username()}"></td>
             <td class="border border-black" th:text="${dto.coupon().name()}"></td>
             <td class="border border-black p-1">
@@ -39,10 +43,16 @@
         <tr>
             <form action="/api/member-coupon" method="post">
                 <td class="border border-black">
-                    <input class="w-48" name="createdAt" type="datetime-local" required/>
+                    <input class="w-16" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" type="datetime-local" required/>
                 </td>
                 <td class="border border-black">
                     <input class="w-48" name="expiredAt" type="datetime-local" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="usedAt" type="datetime-local" required/>
                 </td>
                 <td class="border border-black">
                     <select name="memberId">

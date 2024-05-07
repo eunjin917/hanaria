@@ -17,7 +17,9 @@
         <thead>
         <tr>
             <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
             <th class="border border-black">만료일시</th>
+            <th class="border border-black">사용일시</th>
             <th class="border border-black">회원</th>
             <th class="border border-black">쿠폰</th>
         </tr>
@@ -26,10 +28,16 @@
         <tr>
             <form name="memberCouponUpdateForm">
                 <td class="border border-black">
-                    <input class="w-48" name="createdAt" type="datetime-local" th:value="${memberCoupon.createdAt()}" required/>
+                    <input class="w-16" name="createdAt" th:value="${memberCoupon.createdAt()}" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" type="datetime-local" th:value="${memberCoupon.validAt()}" required/>
                 </td>
                 <td class="border border-black">
                     <input class="w-48" name="expiredAt" type="datetime-local" th:value="${memberCoupon.expiredAt()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="usedAt" type="datetime-local" th:value="${memberCoupon.usedAt()}" required/>
                 </td>
                 <td class="border border-black">
                     <select name="memberId">
@@ -61,14 +69,16 @@
     const updateMemberCoupon = () => {
         const form = document.forms["memberCouponUpdateForm"];
         if (!form) return;
-        const createdAt = form["createdAt"];
+        const validAt = form["validAt"];
         const expiredAt = form["expiredAt"];
+        const usedAt = form["usedAt"];
         const memberId = form["memberId"];
         const couponId = form["couponId"];
 
         const checkList = [
-            [expiredAt, "생성일시를 입력해 주세요."],
+            [expiredAt, "유효일시를 입력해 주세요."],
             [expiredAt, "만료일시를 입력해 주세요."],
+            [expiredAt, "사용일시를 입력해 주세요."],
             [memberId, "회원그룹을 선택해 주세요."],
             [couponId, "쿠폰그룹을 선택해 주세요."]
         ];
@@ -85,8 +95,9 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                createdAt: createdAt.value,
+                validAt: validAt.value,
                 expiredAt: expiredAt.value,
+                usedAt: usedAt.value,
                 memberId: memberId.value,
                 couponId: couponId.value
             })

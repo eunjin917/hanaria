@@ -8,17 +8,20 @@ import java.time.LocalDateTime;
 
 
 public record MemberCouponUpdateRequestDto(
-        LocalDateTime createdAt,
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
+        LocalDateTime usedAt,
         Long memberId,
         Long couponId
 ) {
     public MemberCoupon toApplied(MemberCoupon memberCoupon, Member member, Coupon coupon) {
         return MemberCoupon.builder()
-                .createdAt(createdAt)
+                .validAt(validAt)
                 .expiredAt(expiredAt)
+                .usedAt(usedAt)
                 .member(member)
                 .coupon(coupon)
+                .createdAt(memberCoupon.getCreatedAt())
                 .build();
     }
 }

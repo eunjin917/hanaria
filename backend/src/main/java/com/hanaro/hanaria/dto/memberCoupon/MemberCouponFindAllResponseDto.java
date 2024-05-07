@@ -9,14 +9,18 @@ import java.time.LocalDateTime;
 
 public record MemberCouponFindAllResponseDto (
         LocalDateTime createdAt,
+        LocalDateTime validAt,
         LocalDateTime expiredAt,
+        LocalDateTime usedAt,
         MemberFindByIdResponseDto member,
         CouponFindByIdResponseDto coupon
 ) {
     public MemberCouponFindAllResponseDto(MemberCoupon entity) {
         this(
                 entity.getCreatedAt(),
+                entity.getValidAt(),
                 entity.getExpiredAt(),
+                entity.getUsedAt(),
                 new MemberFindByIdResponseDto(entity.getMember()),
                 new CouponFindByIdResponseDto(entity.getCoupon())
         );

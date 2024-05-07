@@ -29,6 +29,10 @@ public class MemberCoupon {
     @Column(name = "member_coupon_created_at")
     @Builder.Default
     LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "member_coupon_valid_at")
+    LocalDateTime validAt;
     @Column(name = "member_coupon_expired_at")
     LocalDateTime expiredAt;
+    @Column(name = "member_coupon_used_at")
+    LocalDateTime usedAt;
 }
