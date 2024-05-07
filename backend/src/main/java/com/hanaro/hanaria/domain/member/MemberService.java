@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -64,5 +65,9 @@ public class MemberService {
     public MemberFindByIdResponseDto findById(Long id) {
         Member member = memberRepository.findById(id).orElseThrow();
         return new MemberFindByIdResponseDto(member);
+    }
+
+    public List<MemberFindAllResponseDto> findAll() {
+        return memberRepository.findAll().stream().map(MemberFindAllResponseDto::new).toList();
     }
 }
