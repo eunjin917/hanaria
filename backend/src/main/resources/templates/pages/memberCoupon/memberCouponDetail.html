@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원쿠폰 상세</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>회원쿠폰 상세</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
+            <th class="border border-black">만료일시</th>
+            <th class="border border-black">사용일시</th>
+            <th class="border border-black">회원</th>
+            <th class="border border-black">쿠폰</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form name="memberCouponUpdateForm">
+                <td class="border border-black" >
+                    <input th:value="${memberCoupon.id()}" name="memberCouponId" disabled />
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="createdAt" th:value="${#temporals.format(memberCoupon.createdAt(),'MM.dd HH:mm')}" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" type="datetime-local" th:value="${memberCoupon.validAt()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="expiredAt" type="datetime-local" th:value="${memberCoupon.expiredAt()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="usedAt" type="datetime-local" th:value="${memberCoupon.usedAt()}"/>
+                </td>
+                <td class="border border-black">
+                    <select name="memberId">
+                        <option th:each="member, status: ${members}" th:value="${member.id()}"
+                                th:text="${member.username()}" th:selected="${member.id() == memberCoupon.member().id()}">회원
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="couponId">
+                        <option th:each="coupon, status: ${coupons}" th:value="${coupon.id()}"
+                                th:text="${coupon.name()}" th:selected="${coupon.id() == memberCoupon.coupon().id()}">쿠폰
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="button" value="수정" onclick="updateMemberCoupon()"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/member-coupons">목록으로</a>
+</div>
+
+<script>
+    const updateMemberCoupon = () => {
+        const form = document.forms["memberCouponUpdateForm"];
+        if (!form) return;
+        const memberCouponId = form["memberCouponId"];
+        const validAt = form["validAt"];
+        const expiredAt = form["expiredAt"];
+        const usedAt = form["usedAt"];
+        const memberId = form["memberId"];
+        const couponId = form["couponId"];
+
+        const checkList = [
+            [memberCouponId, "ID정보에 문제가 있습니다."],
+            [expiredAt, "유효일시를 입력해 주세요."],
+            [expiredAt, "만료일시를 입력해 주세요."],
+            [memberId, "회원그룹을 선택해 주세요."],
+            [couponId, "쿠폰그룹을 선택해 주세요."]
+        ];
+        for (const [input, label] of checkList) {
+            if (input.value === "") {
+                alert(label);
+                input.focus();
+                return;
+            }
+        }
+        fetch(`/api/member-coupon`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                memberCouponId: memberCouponId.value,
+                validAt: validAt.value,
+                expiredAt: expiredAt.value,
+                usedAt: usedAt.value,
+                memberId: memberId.value,
+                couponId: couponId.value
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/member-coupons";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>

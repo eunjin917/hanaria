@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>쿠폰 상세</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>쿠폰 상세</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
+            <th class="border border-black">만료일시</th>
+            <th class="border border-black">이름</th>
+            <th class="border border-black">영어이름</th>
+            <th class="border border-black">가격</th>
+            <th class="border border-black">상품</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form name="couponUpdateForm">
+                <td class="border border-black">
+                    <input class="w-16" name="couponId" th:value="${coupon.id() }" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="createdAt" th:value="${#temporals.format(coupon.createdAt(),'MM.dd HH:mm')}" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" type="datetime-local" th:value="${coupon.validAt()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="expiredAt" type="datetime-local" th:value="${coupon.expiredAt()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="name" th:value="${coupon.name()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="nameEn" th:value="${coupon.nameEn()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16" name="price" th:value="${coupon.price()}" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="productId">
+                        <option th:each="product, status: ${products}" th:value="${product.id()}"
+                                th:text="${product.name()}">상품
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="button" value="수정" onclick="updateCoupon()"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/coupons">목록으로</a>
+</div>
+
+<script>
+    const updateCoupon = () => {
+        const form = document.forms["couponUpdateForm"];
+        if (!form) return;
+        const couponId = form["couponId"];
+        const validAt = form["validAt"];
+        const expiredAt = form["expiredAt"];
+        const name = form["name"];
+        const nameEn = form["nameEn"];
+        const price = form["price"];
+        const productId = form["productId"];
+
+        const checkList = [
+            [couponId, "쿠폰 ID 정보에 문제가 있습니다."],
+            [validAt, "유효일시를 입력해 주세요."],
+            [expiredAt, "만료일시를 입력해 주세요."],
+            [name, "이름을 입력해 주세요."],
+            [nameEn, "영어이름을 입력해 주세요."],
+            [price, "가격을 입력해 주세요."],
+            [productId, "쿠폰그룹을 선택해 주세요."]
+        ];
+        for (const [input, label] of checkList) {
+            if (input.value === "") {
+                alert(label);
+                input.focus();
+                return;
+            }
+        }
+        fetch(`/api/coupon`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                productId: productId.value,
+                validAt: validAt.value,
+                expiredAt: expiredAt.value,
+                name: name.value,
+                nameEn: nameEn.value,
+                price: price.value,
+                couponId: couponId.value,
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/coupons";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>

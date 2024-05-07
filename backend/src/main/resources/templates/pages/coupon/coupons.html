@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원쿠폰 관리</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>회원쿠폰 <span th:text="${list.size()}"></span>건</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">유효일시</th>
+            <th class="border border-black">만료일시</th>
+            <th class="border border-black">이름</th>
+            <th class="border border-black">영어이름</th>
+            <th class="border border-black">가격</th>
+            <th class="border border-black">상품</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, status: ${list}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.validAt(), 'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.expiredAt(), 'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.name()}"></td>
+            <td class="border border-black" th:text="${dto.nameEn()}"></td>
+            <td class="border border-black" th:text="${dto.price()}"></td>
+            <td class="border border-black" th:text="${dto.product().name()}"></td>
+            <td class="border border-black p-1">
+                <a th:href="|/coupon/${dto.id()}|">수정</a>
+            </td>
+            <td class="border border-black p-1">
+                <button th:onclick="|deleteCoupon(${dto.id()});|">삭제</button>
+            </td>
+        </tr>
+
+        <tr>
+            <form action="/api/coupon" method="post">
+                <td class="border border-black">
+                    <input class="w-16" name="id" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="validAt" type="datetime-local" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-48" name="expiredAt" type="datetime-local" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="name" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="nameEn" required/>
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16" name="price" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="productId">
+                        <option th:each="product, status: ${products}" th:value="${product.id()}"
+                                th:text="${product.name()}">상품
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="submit" value="추가"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const deleteCoupon = (id) => {
+        fetch(`/api/coupon?id=${id}`, {method: 'DELETE'})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/coupons";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+
+</script>
+</body>
+</html>
