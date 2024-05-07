@@ -33,13 +33,13 @@
                     <input class="w-16" name="couponId" th:value="${coupon.id() }" disabled/>
                 </td>
                 <td class="border border-black">
-                    <input class="w-16" name="createdAt" th:value="${coupon.createdAt()}" disabled/>
+                    <input class="w-48" name="createdAt" th:value="${#temporals.format(coupon.createdAt(),'MM.dd HH:mm')}" disabled/>
                 </td>
                 <td class="border border-black">
-                    <input class="w-48" name="validAt" th:value="${coupon.validAt()}" type="datetime-local" required/>
+                    <input class="w-48" name="validAt" type="datetime-local" th:value="${coupon.validAt()}" required/>
                 </td>
                 <td class="border border-black">
-                    <input class="w-48" name="expiredAt" th:value="${coupon.expiredAt()}" type="datetime-local" required/>
+                    <input class="w-48" name="expiredAt" type="datetime-local" th:value="${coupon.expiredAt()}" required/>
                 </td>
                 <td class="border border-black">
                     <input class="w-32" name="name" th:value="${coupon.name()}" required/>

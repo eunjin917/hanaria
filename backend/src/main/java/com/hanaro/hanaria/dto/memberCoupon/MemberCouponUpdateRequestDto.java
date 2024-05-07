@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 
 public record MemberCouponUpdateRequestDto(
+        Long memberCouponId,
         LocalDateTime validAt,
         LocalDateTime expiredAt,
         LocalDateTime usedAt,
@@ -19,6 +20,7 @@ public record MemberCouponUpdateRequestDto(
                 .validAt(validAt)
                 .expiredAt(expiredAt)
                 .usedAt(usedAt)
+                .id(memberCoupon.getId())
                 .member(member)
                 .coupon(coupon)
                 .createdAt(memberCoupon.getCreatedAt())

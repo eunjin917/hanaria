@@ -34,9 +34,9 @@ public class MemberCouponController {
         return "/pages/memberCoupon/memberCoupons";
     }
 
-    @GetMapping("/member-coupon/{memberId}/{couponId}")
-    public String adminProductDetail(Model model, @PathVariable(name = "memberId") Long memberId, @PathVariable(name = "couponId") Long couponId) {
-        MemberCouponFindByIdResponseDto dto = memberCouponService.findByMemberIdAndCouponId(memberId, couponId);
+    @GetMapping("/member-coupon/{id}")
+    public String adminProductDetail(Model model, @PathVariable(name = "id") Long id) {
+        MemberCouponFindByIdResponseDto dto = memberCouponService.findById(id);
         List<MemberFindAllResponseDto> memberFindAllResponseDtoList = memberService.findAll();
         List<CouponFindAllResponseDto> couponFindAllResponseDtoList = couponService.findAll();
         model.addAttribute("memberCoupon", dto);

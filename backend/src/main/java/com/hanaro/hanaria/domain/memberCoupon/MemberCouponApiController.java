@@ -35,8 +35,8 @@ public class MemberCouponApiController {
     }
 
     @DeleteMapping("/member-coupon")
-    public ResponseEntity<String> adminMemberCouponDelete(@RequestParam(name = "memberId") Long memberId, @RequestParam(name = "couponId") Long couponId) {
-        boolean isDeleted = memberCouponService.deleteByMemberIdAndCouponId(memberId, couponId);
+    public ResponseEntity<String> adminMemberCouponDelete(@RequestParam(name = "id") Long id) {
+        boolean isDeleted = memberCouponService.deleteById(id);
         if (isDeleted) {
             return ResponseEntity.ok("회원쿠폰이 삭제되었습니다.");
         } else {

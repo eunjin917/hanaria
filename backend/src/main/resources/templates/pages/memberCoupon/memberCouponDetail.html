@@ -16,6 +16,7 @@
     <table class="border-collapse text-center">
         <thead>
         <tr>
+            <th class="border border-black">ID</th>
             <th class="border border-black">생성일시</th>
             <th class="border border-black">유효일시</th>
             <th class="border border-black">만료일시</th>
@@ -27,8 +28,11 @@
         <tbody>
         <tr>
             <form name="memberCouponUpdateForm">
+                <td class="border border-black" >
+                    <input th:value="${memberCoupon.id()}" name="memberCouponId" disabled />
+                </td>
                 <td class="border border-black">
-                    <input class="w-16" name="createdAt" th:value="${memberCoupon.createdAt()}" disabled/>
+                    <input class="w-48" name="createdAt" th:value="${#temporals.format(memberCoupon.createdAt(),'MM.dd HH:mm')}" disabled/>
                 </td>
                 <td class="border border-black">
                     <input class="w-48" name="validAt" type="datetime-local" th:value="${memberCoupon.validAt()}" required/>
@@ -37,19 +41,19 @@
                     <input class="w-48" name="expiredAt" type="datetime-local" th:value="${memberCoupon.expiredAt()}" required/>
                 </td>
                 <td class="border border-black">
-                    <input class="w-48" name="usedAt" type="datetime-local" th:value="${memberCoupon.usedAt()}" required/>
+                    <input class="w-48" name="usedAt" type="datetime-local" th:value="${memberCoupon.usedAt()}"/>
                 </td>
                 <td class="border border-black">
                     <select name="memberId">
                         <option th:each="member, status: ${members}" th:value="${member.id()}"
-                                th:text="${member.username()}">회원
+                                th:text="${member.username()}" th:selected="${member.id() == memberCoupon.member().id()}">회원
                         </option>
                     </select>
                 </td>
                 <td class="border border-black">
                     <select name="couponId">
                         <option th:each="coupon, status: ${coupons}" th:value="${coupon.id()}"
-                                th:text="${coupon.name()}">쿠폰
+                                th:text="${coupon.name()}" th:selected="${coupon.id() == memberCoupon.coupon().id()}">쿠폰
                         </option>
                     </select>
                 </td>
@@ -69,6 +73,7 @@
     const updateMemberCoupon = () => {
         const form = document.forms["memberCouponUpdateForm"];
         if (!form) return;
+        const memberCouponId = form["memberCouponId"];
         const validAt = form["validAt"];
         const expiredAt = form["expiredAt"];
         const usedAt = form["usedAt"];
@@ -76,9 +81,9 @@
         const couponId = form["couponId"];
 
         const checkList = [
+            [memberCouponId, "ID정보에 문제가 있습니다."],
             [expiredAt, "유효일시를 입력해 주세요."],
             [expiredAt, "만료일시를 입력해 주세요."],
-            [expiredAt, "사용일시를 입력해 주세요."],
             [memberId, "회원그룹을 선택해 주세요."],
             [couponId, "쿠폰그룹을 선택해 주세요."]
         ];
@@ -95,6 +100,7 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                memberCouponId: memberCouponId.value,
                 validAt: validAt.value,
                 expiredAt: expiredAt.value,
                 usedAt: usedAt.value,
