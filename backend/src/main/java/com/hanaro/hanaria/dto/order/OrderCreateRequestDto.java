@@ -15,11 +15,11 @@ public record OrderCreateRequestDto(
         Long memberId,
         List<ItemCreateRequestDto> items
 ) {
-    public Order toEntity(Member member, String code, Integer tmpNo) {
+    public Order toEntity(Member member, String code) {
         return Order.builder()
                 .code(code)
                 .paidAt(LocalDateTime.now())
-                .tmpNo(tmpNo)
+                .tmpNo(null)
                 .price(price)
                 .method(isForHere ? OrderMethod.HERE : OrderMethod.TOGO)
                 .status(OrderStatus.PAYING)

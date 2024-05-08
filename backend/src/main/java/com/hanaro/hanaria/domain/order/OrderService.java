@@ -22,8 +22,7 @@ public class OrderService {
     public Order create(OrderCreateRequestDto dto) {
         Member member = memberRepository.findById(dto.memberId()).orElse(null);
         String code = UUID.randomUUID().toString();
-        Integer tmpNo = orderRepository.getNextOrderTmpNoForToday();
-        return orderRepository.save(dto.toEntity(member, code, tmpNo));
+        return orderRepository.save(dto.toEntity(member, code));
     }
 
     @Transactional(readOnly = true)
@@ -45,6 +44,14 @@ public class OrderService {
         orderRepository.save(dto.toApplied(optional.get(), member));
         return true;
     }
+
+    @Transactional
+    public boolean updateTmpNo() {
+        Integer tmpNo = orderRepository.getNextOrderTmpNoForToday();
+        return true;
+    }
+
+
 
     @Transactional
     public boolean deleteById(Long id) {

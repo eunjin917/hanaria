@@ -38,4 +38,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "member_id", unique = false)
     Member member;
+
+    public void update(Integer tmpNo, OrderStatus status) {
+        this.tmpNo = tmpNo;
+        this.status = status;
+    }
 }

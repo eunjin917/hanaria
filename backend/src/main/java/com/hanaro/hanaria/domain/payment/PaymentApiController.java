@@ -1,5 +1,8 @@
 package com.hanaro.hanaria.domain.payment;
 
+import com.hanaro.hanaria.domain.order.Order;
+import com.hanaro.hanaria.domain.order.OrderService;
+import com.hanaro.hanaria.dto.order.OrderUpdateRequestDto;
 import com.hanaro.hanaria.dto.payment.PaymentCreateRequestDto;
 import com.hanaro.hanaria.dto.payment.PaymentCreateResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -9,14 +12,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
-//@Secured({"ADMIN"})
 public class PaymentApiController {
     private final PaymentService paymentService;
+    private final OrderService orderService;
 
     @PostMapping("/payment")
     public ResponseEntity<PaymentCreateResponseDto> adminPaymentCreate(@RequestBody PaymentCreateRequestDto dto) {
         Payment payment = paymentService.create(dto);
-        return ResponseEntity.ok(new PaymentCreateResponseDto(payment, payment.order.getTmpNo()));
+        PaymentCreateResponseDto responseDto = paymentService.checkFinish(payment);
+        return ResponseEntity.ok(responseDto);
     }
 
     @DeleteMapping("/payment")
