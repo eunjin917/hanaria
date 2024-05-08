@@ -33,9 +33,14 @@ public class GroupService {
     }
 
     @Transactional(readOnly = true)
-    public List<GroupFindByCategoryResponseDto> findByCategoryIdAndPageNo(Integer category, int pageNo) {
+    public List<CategoryFindAllResponseDto> findCategories() {
+        return groupRepository.findCategories();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GroupFindByCategoryResponseDto> findByCategoryIdAndPageNo(Integer categoryValue, int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 6);
-        Page<Group> pageContent = groupRepository.findByCategory(GroupCategory.values()[category], pageable);
+        Page<Group> pageContent = groupRepository.findByCategory(GroupCategory.values()[categoryValue], pageable);
 
         return pageContent.getContent().stream()
                 .map(group -> {

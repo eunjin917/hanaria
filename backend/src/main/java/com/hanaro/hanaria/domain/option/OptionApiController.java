@@ -1,10 +1,14 @@
 package com.hanaro.hanaria.domain.option;
 
+import com.hanaro.hanaria.dto.group.CategoryFindAllResponseDto;
 import com.hanaro.hanaria.dto.option.OptionCreateRequestDto;
+import com.hanaro.hanaria.dto.option.OptionFindByCategoryResponseDto;
 import com.hanaro.hanaria.dto.option.OptionUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/api")
 @RestController
@@ -12,6 +16,12 @@ import org.springframework.web.bind.annotation.*;
 //@Secured({"ADMIN"})
 public class OptionApiController {
     private final OptionService optionService;
+
+    @GetMapping("/options/{categoryValue}")
+    public ResponseEntity<List<OptionFindByCategoryResponseDto>> optionList(@PathVariable(name = "categoryValue") Integer categoryValue) {
+        List<OptionFindByCategoryResponseDto> optionList = optionService.findByCategory(categoryValue);
+        return ResponseEntity.ok(optionList);
+    }
 
     @PostMapping("/option")
     public String adminOptionCreate(@ModelAttribute OptionCreateRequestDto dto) {
