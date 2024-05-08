@@ -25,8 +25,8 @@ public record GroupFindByCategoryResponseDto(
                                         product.nameEn(),
                                         product.image(),
                                         product.recommended(),
-                                        true,
-                                        true))
+                                        product.dessertOptionAvailable(),
+                                        product.drinkOptionAvailable()))
                         .collect(Collectors.toList())
         );
     }

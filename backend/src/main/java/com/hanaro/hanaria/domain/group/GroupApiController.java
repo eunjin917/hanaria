@@ -15,9 +15,9 @@ import java.util.List;
 public class GroupApiController {
     private final GroupService groupService;
 
-    @GetMapping("/groups-products")
-    public ResponseEntity<List<GroupFindByCategoryResponseDto>> groupsProducts(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
-        List<GroupFindByCategoryResponseDto> groupDtoList = groupService.findByCategoryIdAndPageNo(pageNo);
+    @GetMapping("/groups-products/{category}")
+    public ResponseEntity<List<GroupFindByCategoryResponseDto>> groupsProducts(@PathVariable(name = "category") Integer category, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        List<GroupFindByCategoryResponseDto> groupDtoList = groupService.findByCategoryIdAndPageNo(category, pageNo);
         return ResponseEntity.ok(groupDtoList);
     }
 

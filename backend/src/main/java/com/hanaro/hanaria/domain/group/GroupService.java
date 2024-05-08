@@ -33,19 +33,18 @@ public class GroupService {
     }
 
     @Transactional(readOnly = true)
-    public List<GroupFindByCategoryResponseDto> findByCategoryIdAndPageNo(int pageNo) {
+    public List<GroupFindByCategoryResponseDto> findByCategoryIdAndPageNo(Integer category, int pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 6);
-        Page<Group> pageContent = groupRepository.findAll(pageable);
+        Page<Group> pageContent = groupRepository.findByCategory(GroupCategory.values()[category], pageable);
 
-        List<GroupFindByCategoryResponseDto> responseDTOs = pageContent.getContent().stream()
+        return pageContent.getContent().stream()
                 .map(group -> {
-                    List<ProductFindByCategoryResponseDto> productDtos = productRepository.findByGroupId(group.getId()).stream()
+                    List<ProductFindByCategoryResponseDto> productList = productRepository.findByGroupId(group.getId()).stream()
                             .map(ProductFindByCategoryResponseDto::new)
                             .collect(Collectors.toList());
-                    return new GroupFindByCategoryResponseDto(group, productDtos);
+                    return new GroupFindByCategoryResponseDto(group, productList);
                 })
                 .collect(Collectors.toList());
-        return responseDTOs;
     }
 
     @Transactional(readOnly = true)

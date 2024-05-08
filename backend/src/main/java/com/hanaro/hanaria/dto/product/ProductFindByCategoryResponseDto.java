@@ -20,8 +20,8 @@ public record ProductFindByCategoryResponseDto(
                 entity.getNameEn(),
                 entity.getImage(),
                 entity.isRecommended(),
-                true,
-                true
+                entity.getType().ordinal() == 2,    // 세트일 때만 디저트 true
+                entity.getType().ordinal() > 0  // 콤보, 세트일 때만 음료 false
         );
     }
 }
