@@ -9,7 +9,8 @@ export const VStack = (props: PropsWithChildren<StackProps>) => {
     <div
       {...attributes}
       className={
-        `flex ${rotated ? "flex-row" : "flex-col"} gap-1` + `${className ?? ""}`
+        `flex ${rotated ? "flex-row" : "flex-col"} gap-1 ` +
+        `${className ?? ""}`
       }
     >
       {children}
