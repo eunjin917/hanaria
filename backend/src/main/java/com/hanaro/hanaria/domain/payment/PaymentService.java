@@ -20,15 +20,13 @@ public class PaymentService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public boolean create(PaymentCreateRequestDto dto) {
-        // dto에서 주문 ID 받아옴, 그걸로 그룹 찾아서 넣어주기
+    public Payment create(PaymentCreateRequestDto dto) {
         Order order = orderRepository.findById(dto.orderId()).orElseThrow();
         // 0부터 999999 사이의 랜덤한 승인번호 생성
         int randomNumber = (int) (Math.random() * 1000000);
         String approvalNo = String.format("%06d", randomNumber);
 
-        Long id = paymentRepository.save(dto.toEntity(order, approvalNo)).getId();
-        return paymentRepository.existsById(id);
+        return paymentRepository.save(dto.toEntity(order, approvalNo));
     }
 
     @Transactional(readOnly = true)
