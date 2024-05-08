@@ -3,10 +3,8 @@ package com.hanaro.hanaria.domain.option;
 
 import com.hanaro.hanaria.domain.product.Product;
 import com.hanaro.hanaria.domain.product.ProductRepository;
-import com.hanaro.hanaria.dto.option.OptionCreateRequestDto;
-import com.hanaro.hanaria.dto.option.OptionFindAllResponseDto;
-import com.hanaro.hanaria.dto.option.OptionFindByIdResponseDto;
-import com.hanaro.hanaria.dto.option.OptionUpdateRequestDto;
+import com.hanaro.hanaria.dto.group.CategoryFindAllResponseDto;
+import com.hanaro.hanaria.dto.option.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +29,12 @@ public class OptionService {
     @Transactional(readOnly = true)
     public OptionFindByIdResponseDto findById(Long id) {
         return new OptionFindByIdResponseDto(optionRepository.findById(id).orElseThrow());
+    }
+
+    @Transactional(readOnly = true)
+    public List<OptionFindByCategoryResponseDto> findByCategory(Integer categoryValue) {
+        List<Option> optionList = optionRepository.findByCategory(OptionCategory.values()[categoryValue]);
+        return optionList.stream().map(OptionFindByCategoryResponseDto::new).toList();
     }
 
     @Transactional(readOnly = true)

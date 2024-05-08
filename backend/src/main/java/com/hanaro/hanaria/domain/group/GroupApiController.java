@@ -1,17 +1,29 @@
 package com.hanaro.hanaria.domain.group;
 
-import com.hanaro.hanaria.dto.group.GroupCreateRequestDto;
-import com.hanaro.hanaria.dto.group.GroupUpdateRequestDto;
+import com.hanaro.hanaria.dto.group.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
-//@Secured({"ADMIN"})
 public class GroupApiController {
     private final GroupService groupService;
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<CategoryFindAllResponseDto>> categories() {
+        List<CategoryFindAllResponseDto> categoryList = groupService.findCategories();
+        return ResponseEntity.ok(categoryList);
+    }
+
+    @GetMapping("/groups-products/{categoryValue}")
+    public ResponseEntity<List<GroupFindByCategoryResponseDto>> groupsProducts(@PathVariable(name = "categoryValue") Integer categoryValue, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
+        List<GroupFindByCategoryResponseDto> groupList = groupService.findByCategoryIdAndPageNo(categoryValue, pageNo);
+        return ResponseEntity.ok(groupList);
+    }
 
     @PostMapping("/group")
     public String adminGroupCreate(@ModelAttribute GroupCreateRequestDto dto) {
