@@ -1,23 +1,29 @@
 package com.hanaro.hanaria.dto.order;
 
 import com.hanaro.hanaria.domain.member.Member;
-import com.hanaro.hanaria.domain.order.Order;
 import com.hanaro.hanaria.domain.order.OrderMethod;
 import com.hanaro.hanaria.domain.order.OrderStatus;
+import com.hanaro.hanaria.dto.item.ItemCreateRequestDto;
+import com.hanaro.hanaria.domain.order.Order;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public record OrderCreateRequestDto(
-        OrderMethod method,
-        OrderStatus status,
-        Long memberId
+        Integer price,
+        boolean isForHere,
+        Long memberId,
+        List<ItemCreateRequestDto> items
 ) {
     public Order toEntity(Member member, String code, Integer tmpNo) {
         return Order.builder()
-                .price(0)
-                .method(method)
-                .status(status)
-                .member(member)
                 .code(code)
+                .paidAt(LocalDateTime.now())
                 .tmpNo(tmpNo)
+                .price(price)
+                .method(isForHere ? OrderMethod.HERE : OrderMethod.TOGO)
+                .status(OrderStatus.PAYING)
+                .member(member)
                 .build();
     }
 }
