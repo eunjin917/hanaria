@@ -1,7 +1,7 @@
 type ItemType = {
-  itemPrice: number;
-  itemCount: number;
-  itemRequest: number;
+  price: number;
+  count: number;
+  request: number;
   productId: number;
   dessertOptionId: number;
   drinkOptionId: number;
