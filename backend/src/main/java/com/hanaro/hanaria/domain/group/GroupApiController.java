@@ -19,7 +19,7 @@ public class GroupApiController {
         return ResponseEntity.ok(categoryList);
     }
 
-    @GetMapping("/groups-products/{category}")
+    @GetMapping("/groups-products/{categoryValue}")
     public ResponseEntity<List<GroupFindByCategoryResponseDto>> groupsProducts(@PathVariable(name = "categoryValue") Integer categoryValue, @RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo) {
         List<GroupFindByCategoryResponseDto> groupList = groupService.findByCategoryIdAndPageNo(categoryValue, pageNo);
         return ResponseEntity.ok(groupList);
