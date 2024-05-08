@@ -4,6 +4,6 @@ type GroupType = {
   id: number;
   name: string;
   nameEn: string;
-  products: ProductType[];
+  productList: ProductType[];
 };
 export default GroupType;
