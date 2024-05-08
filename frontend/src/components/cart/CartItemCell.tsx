@@ -21,9 +21,9 @@ function CartItemCell({ item, index, onChange, onDelete }: CartItemCellProps) {
   };
   return (
     <VStack className="items-center w-32 hover:scale-105 transition-all cursor-pointer ">
-      <div className="flex flex-col justify-center items-center bg-white w-28 h-28 rounded-xl shadowed">
+      <div className="flex flex-col justify-center items-center bg-white w-24 h-24 rounded-xl shadowed">
         <button
-          className="absolute translate-x-14 -translate-y-14 rounded-full shadowed w-6 h-6 font-bold leading-none bg-red-500 text-white"
+          className="absolute translate-x-12 -translate-y-12 rounded-full shadowed w-6 h-6 font-bold leading-none bg-red-500 text-white"
           onClick={deleteItem}
         >
           X

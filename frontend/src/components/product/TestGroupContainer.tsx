@@ -79,9 +79,9 @@ function TestGroupContainer({ onSelect }: GroupContainerProps) {
   }, [pages]);
 
   return (
-    <div className="container mx-auto max-w-xl">
+    <div className="mx-auto max-w-xl">
       {/* 카테고리 선택 버튼들 */}
-      <HStack className="m-2">
+      <HStack className="mx-2 mt-2">
         {categories.map((category) => (
           <CategorySelector
             key={category.id}

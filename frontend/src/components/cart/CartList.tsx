@@ -15,21 +15,20 @@ interface CartListProps {
 function CartList({ items, onChange, onDelete }: CartListProps) {
   return (
     /* 장바구니 스와이퍼 */
-    <Swiper
-      slidesPerView={"auto"}
-      className="bg-slate-100 h-48 rounded-xl m-2 px-2 py-5 w-full max-w-xl"
-    >
-      {items.map((item, index) => (
-        <SwiperSlide key={index} className="!w-fit">
-          <CartItemCell
-            item={item}
-            index={index}
-            onChange={onChange}
-            onDelete={onDelete}
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className="px-2 mb-2 w-full max-w-xl">
+      <Swiper slidesPerView={"auto"} className="bg-slate-100 py-5 rounded-xl">
+        {items.map((item, index) => (
+          <SwiperSlide key={index} className="!w-fit">
+            <CartItemCell
+              item={item}
+              index={index}
+              onChange={onChange}
+              onDelete={onDelete}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 }
 export default CartList;
