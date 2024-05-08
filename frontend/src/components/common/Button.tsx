@@ -1,17 +1,16 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  color: string;
-}
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 
 function Button({
+  color,
   className,
   children,
   ...props
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
-      className={`px-2 py-4 shadowed w-fit rounded-xl ${className}`}
+      className={`hover:scale-105 transition-all px-2 py-4 shadowed w-fit rounded-xl ${className}`}
       {...props}
     >
       {children}
