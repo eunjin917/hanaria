@@ -31,9 +31,9 @@ public class ItemService {
         return dtoList.stream()
                 .map(dto -> {
                     Product product = productRepository.findById(dto.productId()).orElseThrow();
-                    Optional<Option> dessertOption = Optional.ofNullable(dto.dessert_option_id())
+                    Optional<Option> dessertOption = Optional.ofNullable(dto.dessertOptionId())
                             .flatMap(optionRepository::findById);
-                    Optional<Option> drinkOption = Optional.ofNullable(dto.drink_option_id())
+                    Optional<Option> drinkOption = Optional.ofNullable(dto.drinkOptionId())
                             .flatMap(optionRepository::findById);
                     Item item = dto.toEntity(order, product, dessertOption.orElse(null), drinkOption.orElse(null));
                     return itemRepository.save(item);
