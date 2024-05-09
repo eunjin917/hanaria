@@ -95,13 +95,13 @@ function Products({ onMain }: ProductsProps) {
       <VStack className="items-center w-full gap-0">
         {user == null ? (
           <Button
-            className="absolute right-0 top-0 bg-red-300 font-bold py-1 rounded-md m-2"
+            className="absolute top-1 bg-red-300 font-bold py-1 rounded-md m-2"
             onClick={() => setIsLogining(true)}
           >
             로그인하여 쿠폰 사용하기
           </Button>
         ) : (
-          <Button className="absolute right-0 top-0 bg-red-300 font-bold py-1 rounded-md m-2">
+          <Button className="absolute top-1 bg-red-300 font-bold py-1 rounded-md m-2">
             쿠폰 목록
           </Button>
         )}
