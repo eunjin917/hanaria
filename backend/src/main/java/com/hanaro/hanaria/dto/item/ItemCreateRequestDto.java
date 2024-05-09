@@ -9,8 +9,8 @@ public record ItemCreateRequestDto(
         Integer count,
         Long request,
 		Long productId,
-        Long dessert_option_id,
-        Long drink_option_id
+        Long dessertOptionId,
+        Long drinkOptionId
 ) {
     public Item toEntity(Order order, Product product, Option dessertOption, Option drinkOption) {
         return Item.builder()
