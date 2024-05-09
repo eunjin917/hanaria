@@ -8,12 +8,18 @@ import Modal from "../components/common/Modal";
 import GroupType from "../types/GroupType";
 import { useState } from "react";
 import OrderBuilder from "../components/order/OrderBuilder";
+import OrderType from "../types/OrderType";
+import PaymentBuilder from "../components/order/PaymentBuilder";
 
 function Products() {
   // TODO: useContext,useReducer,세션스토리지로 상태들 옮기고 라우팅하기
   const [selectedGroup, setSelectedGroup] = useState<GroupType | null>();
   const [cartItems, setCartItems] = useState<LocalItemType[]>([]);
   const [isCartDone, setIsCartDone] = useState<boolean>(false);
+  const [isOrderDone, setIsOrderDone] = useState<boolean>(false);
+  const [isLumpSum, setIsLumpSum] = useState<boolean>(true);
+  const [orderId, setOrderId] = useState<number | null>(null);
+  const [orderCode, setOrderCode] = useState<string>("");
   const appendCartItem = (item: LocalItemType) => {
     setCartItems([...cartItems, item]);
   };
@@ -34,10 +40,31 @@ function Products() {
   const completeCart = () => {
     if (cartItems.length > 0) setIsCartDone(true);
   };
+  const completeOrder = (order: OrderType, isLumpSum: boolean) => {
+    setIsOrderDone(true);
+    //TODO: 서버통신
+    setOrderId(0);
+    setOrderCode("asdf-asdf-asdf-1234");
+    setIsLumpSum(isLumpSum);
+  };
   // 일단은 라우팅 안하고 이 안에서 해결
   return (
     <>
-      {isCartDone && (
+      {isCartDone && isOrderDone && (
+        <Modal onClose={() => {}} closeButton={false}>
+          {orderId == null ? (
+            <>주문정보 전송 중 ...</>
+          ) : (
+            <PaymentBuilder
+              orderId={orderId}
+              totalPrice={totalPrice}
+              isLumpSum={isLumpSum}
+              orderCode={orderCode}
+            />
+          )}
+        </Modal>
+      )}
+      {isCartDone && !isOrderDone && (
         <Modal onClose={() => {}} closeButton={false}>
           <OrderBuilder
             cartItems={cartItems}
@@ -46,7 +73,7 @@ function Products() {
             onLogin={() => {}}
             currentPoint={0}
             earningPoint={Math.floor(totalPrice / 10)}
-            onOrderDone={console.log}
+            onOrderDone={completeOrder}
           />
         </Modal>
       )}

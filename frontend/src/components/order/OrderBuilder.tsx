@@ -24,7 +24,7 @@ interface OrderBuilderProps {
   onLogin: () => void;
   currentPoint: number;
   earningPoint: number;
-  onOrderDone: (order: OrderType) => void;
+  onOrderDone: (order: OrderType, isLumpsum: boolean) => void;
 }
 
 function OrderBuilder({
@@ -92,7 +92,7 @@ function OrderBuilder({
         drinkOptionId: item.drinkOption?.id ?? null,
       })),
     };
-    onOrderDone(order);
+    onOrderDone(order, isLumpSum!);
   };
   return (
     <HStack>
