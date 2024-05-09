@@ -8,7 +8,7 @@ interface TestGroupPageProps {
 
 function TestGroupPage({ groups, onSelect }: TestGroupPageProps) {
   return (
-    <div className="grid grid-cols-3 mx-12 mb-8">
+    <div className="grid grid-cols-3 mx-12 mb-6">
       {groups.length == 0 ? (
         <span>상품 로딩 중 ...</span>
       ) : (

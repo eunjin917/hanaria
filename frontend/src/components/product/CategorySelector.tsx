@@ -14,7 +14,7 @@ function CategorySelectorNoMemo({
   if (selected)
     return (
       <button
-        className="bg-blue-400 rounded-lg p-2 mr-2 font-bold text-white"
+        className="bg-blue-400 rounded-lg p-2 mr-1 font-bold text-white"
         {...attributes}
       >
         {text}
@@ -23,7 +23,7 @@ function CategorySelectorNoMemo({
   else
     return (
       <button
-        className="bg-blue-50 rounded-lg p-2 mr-2 font-bold text-blue-400"
+        className="bg-blue-50 rounded-lg p-2 mr-1 font-bold text-blue-400"
         {...attributes}
       >
         {text}

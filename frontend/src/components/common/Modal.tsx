@@ -13,7 +13,7 @@ function Modal({ onClose, children, ...props }: PropsWithChildren<ModalProps>) {
           onClick={onClose}
         ></div>
         <div
-          className="relative bg-white shadowed w-fit h-fit mx-auto my-16 rounded-xl p-4 z-50"
+          className="relative bg-white shadowed w-fit h-fit mx-auto my-8 rounded-xl p-4 z-50"
           {...props}
         >
           <button

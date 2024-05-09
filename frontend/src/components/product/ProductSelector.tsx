@@ -9,7 +9,7 @@ interface ProductSelectorProps {
 
 function ProductSelector({ products, onSelect }: ProductSelectorProps) {
   return (
-    <VStack>
+    <VStack className="mx-1.5">
       {products.map((product) => (
         <ProductCell
           key={product.id}
