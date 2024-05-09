@@ -1,16 +1,19 @@
-import { useState } from "react";
 import TestGroupContainer from "../components/product/TestGroupContainer";
-import GroupType from "../types/GroupType";
-import Modal from "../components/common/Modal";
 import ItemSelector from "../components/product/ItemSelector";
-import CartList from "../components/cart/CartList";
-import LocalItemType from "../types/local/LocalItemType";
 import { HStack, VStack } from "../components/common/Stack";
+import LocalItemType from "../types/local/LocalItemType";
+import CartList from "../components/cart/CartList";
 import Button from "../components/common/Button";
+import Modal from "../components/common/Modal";
+import GroupType from "../types/GroupType";
+import { useState } from "react";
+import OrderBuilder from "../components/order/OrderBuilder";
 
 function Products() {
+  // TODO: useContext,useReducer,세션스토리지로 상태들 옮기고 라우팅하기
   const [selectedGroup, setSelectedGroup] = useState<GroupType | null>();
   const [cartItems, setCartItems] = useState<LocalItemType[]>([]);
+  const [isCartDone, setIsCartDone] = useState<boolean>(false);
   const appendCartItem = (item: LocalItemType) => {
     setCartItems([...cartItems, item]);
   };
@@ -28,30 +31,55 @@ function Products() {
     (sum, item) => (sum += item.price),
     0
   );
-
+  const completeCart = () => {
+    if (cartItems.length > 0) setIsCartDone(true);
+  };
+  // 일단은 라우팅 안하고 이 안에서 해결
   return (
-    <VStack className="items-center w-full gap-0">
-      <TestGroupContainer onSelect={setSelectedGroup} />
-      {selectedGroup && (
-        <Modal onClose={() => setSelectedGroup(null)}>
-          <ItemSelector
-            onClose={() => setSelectedGroup(null)}
-            group={selectedGroup}
-            onSelect={appendCartItem}
+    <>
+      {isCartDone && (
+        <Modal onClose={() => {}} closeButton={false}>
+          <OrderBuilder
+            cartItems={cartItems}
+            totalPrice={totalPrice}
+            onClose={() => setIsCartDone(false)}
+            onLogin={() => {}}
+            currentPoint={0}
+            earningPoint={Math.floor(totalPrice / 10)}
+            onOrderDone={console.log}
           />
         </Modal>
       )}
-      <CartList items={cartItems} onChange={changeItem} onDelete={deleteItem} />
-      <HStack>
-        <Button className="w-64 mx-2 bg-yellow-200 text-xl font-bold">
-          메인으로
-        </Button>
-        <Button className="w-64 mx-2 bg-yellow-200 text-xl font-bold">
-          주문하기
-          {cartItems.length > 0 ? ` (${totalPrice.toLocaleString()}원)` : ""}
-        </Button>
-      </HStack>
-    </VStack>
+      <VStack className="items-center w-full gap-0">
+        <TestGroupContainer onSelect={setSelectedGroup} />
+        {selectedGroup && (
+          <Modal onClose={() => setSelectedGroup(null)}>
+            <ItemSelector
+              onClose={() => setSelectedGroup(null)}
+              group={selectedGroup}
+              onSelect={appendCartItem}
+            />
+          </Modal>
+        )}
+        <CartList
+          items={cartItems}
+          onChange={changeItem}
+          onDelete={deleteItem}
+        />
+        <HStack className="">
+          <Button className="!w-64 mx-2 bg-yellow-200 text-xl font-bold">
+            메인으로
+          </Button>
+          <Button
+            className={`!w-64 mx-2 text-xl font-bold ${cartItems.length > 0 ? "bg-yellow-200" : "bg-gray-200"}`}
+            onClick={completeCart}
+          >
+            주문하기
+            {cartItems.length > 0 ? ` (${totalPrice.toLocaleString()}원)` : ""}
+          </Button>
+        </HStack>
+      </VStack>
+    </>
   );
 }
 
