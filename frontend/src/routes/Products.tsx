@@ -10,8 +10,10 @@ import { useState } from "react";
 import OrderBuilder from "../components/order/OrderBuilder";
 import OrderType from "../types/OrderType";
 import PaymentBuilder from "../components/order/PaymentBuilder";
-
-function Products() {
+interface ProductsProps {
+  onMain: () => void;
+}
+function Products({ onMain }: ProductsProps) {
   // TODO: useContext,useReducer,세션스토리지로 상태들 옮기고 라우팅하기
   const [selectedGroup, setSelectedGroup] = useState<GroupType | null>();
   const [cartItems, setCartItems] = useState<LocalItemType[]>([]);
@@ -94,7 +96,10 @@ function Products() {
           onDelete={deleteItem}
         />
         <HStack className="">
-          <Button className="!w-64 mx-2 bg-yellow-200 text-xl font-bold">
+          <Button
+            className="!w-64 mx-2 bg-yellow-200 text-xl font-bold"
+            onClick={onMain}
+          >
             메인으로
           </Button>
           <Button
