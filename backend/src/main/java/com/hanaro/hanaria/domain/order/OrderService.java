@@ -3,10 +3,7 @@ package com.hanaro.hanaria.domain.order;
 
 import com.hanaro.hanaria.domain.member.Member;
 import com.hanaro.hanaria.domain.member.MemberRepository;
-import com.hanaro.hanaria.dto.order.OrderCreateRequestDto;
-import com.hanaro.hanaria.dto.order.OrderFindAllResponseDto;
-import com.hanaro.hanaria.dto.order.OrderFindByIdResponseDto;
-import com.hanaro.hanaria.dto.order.OrderUpdateRequestDto;
+import com.hanaro.hanaria.dto.order.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,14 +19,10 @@ public class OrderService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public boolean create(OrderCreateRequestDto dto) {
-        // dto에서 그룹 ID 받아옴, 그걸로 그룹 찾아서 넣어주기
-        System.out.println(dto);
+    public Order create(OrderCreateRequestDto dto) {
         Member member = memberRepository.findById(dto.memberId()).orElse(null);
         String code = UUID.randomUUID().toString();
-        Integer tmpNo = orderRepository.getNextOrderTmpNoForToday();
-        Long id = orderRepository.save(dto.toEntity(member, code, tmpNo)).getId();
-        return orderRepository.existsById(id);
+        return orderRepository.save(dto.toEntity(member, code));
     }
 
     @Transactional(readOnly = true)
@@ -51,6 +44,14 @@ public class OrderService {
         orderRepository.save(dto.toApplied(optional.get(), member));
         return true;
     }
+
+    @Transactional
+    public boolean updateTmpNo() {
+        Integer tmpNo = orderRepository.getNextOrderTmpNoForToday();
+        return true;
+    }
+
+
 
     @Transactional
     public boolean deleteById(Long id) {

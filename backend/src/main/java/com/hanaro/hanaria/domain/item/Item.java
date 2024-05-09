@@ -39,8 +39,8 @@ public class Item {
     Product productId;
     @ManyToOne
     @JoinColumn(name = "dessert_option_id")
-    Option dessertOption;
+    Option dessertOptionId;
     @ManyToOne
     @JoinColumn(name = "drink_option_id")
-    Option drinkOption;
+    Option drinkOptionId;
 }
