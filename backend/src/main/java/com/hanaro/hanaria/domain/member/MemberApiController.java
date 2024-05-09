@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
-//@Secured({"ADMIN"})
 public class MemberApiController {
     private final MemberService memberService;
 

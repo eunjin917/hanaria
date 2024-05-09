@@ -1,8 +1,8 @@
-package com.hanaro.hanaria.dto.member;
+package com.hanaro.hanaria.dto.auth;
 
 import com.hanaro.hanaria.domain.member.Member;
 
-public record MemberJoinRequestDto(
+public record JoinRequestDto(
         String username,
         String password,
         String nickname,
