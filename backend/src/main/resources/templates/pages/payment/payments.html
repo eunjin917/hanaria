@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>결제정보 관리</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>결제정보 <span th:text="${list.size()}"></span>건</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">카드종류</th>
+            <th class="border border-black">승인번호</th>
+            <th class="border border-black">가격</th>
+            <th class="border border-black">주문</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, status: ${list}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.cardType()}"></td>
+            <td class="border border-black" th:text="${dto.approvalNo()}"></td>
+            <td class="border border-black" th:text="${dto.price()}"></td>
+            <td class="border border-black"
+                th:text="${dto.order() != null? dto.order().id()+': '+dto.order().code() : '주문정보 없음'}"></td>
+            <td class="border border-black p-1">
+                <a th:href="|/order/${dto.order().id()}|">주문정보</a>
+            </td>
+            <td class="border border-black p-1">
+                <button th:onclick="|deletePayment(${dto.id()});|">삭제</button>
+            </td>
+        </tr>
+        <tr>
+            <form action="/api/payment" method="post">
+                <td class="border border-black">
+                    <input class="w-16" name="paymentId" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="cardType" required/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" name="approvalNo" disabled/>
+                </td>
+                <td class="border border-black p-1">
+                    <input class="w-16" type="number" name="price" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="orderId">
+                        <option th:each="order, status: ${orders}" th:value="${order.id()}"
+                                th:text="${order.id()+': '+order.code()}">
+                            주문
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="submit" value="추가"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const deletePayment = (id) => {
+        fetch(`/api/payment?id=${id}`, {method: 'DELETE'})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/payments";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+
+</script>
+</body>
+</html>

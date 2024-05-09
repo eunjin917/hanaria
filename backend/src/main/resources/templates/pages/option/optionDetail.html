@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>옵션 상세</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>옵션 상세</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">가격</th>
+            <th class="border border-black">카테고리</th>
+            <th class="border border-black">상품</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form name="optionUpdateForm">
+                <td class="border border-black">
+                    <input class="w-16" name="optionId" th:value="${option.id()}" disabled/>
+                </td>
+                <td class="border border-black p-1"
+                    th:text="${#temporals.format(option.createdAt(),'MM.dd HH:mm')}">
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16" name="price" th:value="${option.price()}" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="category">
+                        <option th:each="category, status: ${categories}" th:value="${category.name()}"
+                                th:text="${category.getValue_ko()}" th:selected="${category.equals(option.category())}">
+                            카테고리
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="productId">
+                        <option th:each="product, status: ${products}" th:value="${product.id()}"
+                                th:text="${product.name()}" th:selected="${product.id() == option.product().id()}">상품
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="button" value="수정" onclick="updateOption()"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/options">목록으로</a>
+</div>
+
+<script>
+    const updateOption = () => {
+        const form = document.forms["optionUpdateForm"];
+        if (!form) return;
+        const optionId = form["optionId"];
+        const price = form["price"];
+        const category = form["category"];
+        const productId = form["productId"];
+
+        const checkList = [
+            [optionId, "옵션 ID 정보에 문제가 있습니다."],
+            [price, "가격을 입력해 주세요."],
+            [category, "카테고리를 선택해 주세요."],
+            [productId, "상품을 선택해 주세요."],
+        ];
+        for (const [input, label] of checkList) {
+            if (input.value === "") {
+                alert(label);
+                input.focus();
+                return;
+            }
+        }
+        fetch(`/api/option`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                optionId: optionId.value,
+                price: price.value,
+                category: category.value,
+                productId: productId.value,
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/options";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 관리</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>상품 <span th:text="${list.size()}"></span>건</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">이름</th>
+            <th class="border border-black">영어이름</th>
+            <th class="border border-black">가격</th>
+            <th class="border border-black">추천여부</th>
+            <th class="border border-black">상품분류</th>
+            <th class="border border-black">상품그룹</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dto, status: ${list}">
+            <td class="border border-black" th:text="${dto.id()}"></td>
+            <td class="border border-black" th:text="${#temporals.format(dto.createdAt(),'MM.dd HH:mm')}"></td>
+            <td class="border border-black" th:text="${dto.name()}"></td>
+            <td class="border border-black" th:text="${dto.nameEn()}"></td>
+            <td class="border border-black" th:text="${dto.price()}"></td>
+            <td class="border border-black" th:text="${dto.recommended()}"></td>
+            <td class="border border-black" th:text="${dto.type().getValue_ko()}"></td>
+            <td class="border border-black" th:text="${dto.group().name()}"></td>
+            <td class="border border-black p-1">
+                <a th:href="|/product/${dto.id()}|">수정</a>
+            </td>
+            <td class="border border-black p-1">
+                <button th:onclick="|deleteProduct(${dto.id()});|">삭제</button>
+            </td>
+        </tr>
+
+        <tr>
+            <form action="/api/product" method="post">
+                <td class="border border-black">
+                    <input class="w-16" name="id" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-16" name="createdAt" disabled/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="name" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="nameEn" required/>
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16" name="price" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="recommended">
+                        <option value="false" selected>추천안함</option>
+                        <option value="true">추천</option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="type">
+                        <option th:each="type, status: ${types}" th:value="${type.name()}"
+                                th:text="${type.getValue_ko()}">상품분류
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="groupId">
+                        <option th:each="group, status: ${groups}" th:value="${group.id()}"
+                                th:text="${group.name()}">상품그룹
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="submit" value="추가"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const deleteProduct = (id) => {
+        fetch(`/api/product?id=${id}`, {method: 'DELETE'})
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/products";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+
+</script>
+</body>
+</html>

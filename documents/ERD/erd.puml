@@ -1,0 +1,110 @@
+@startuml
+entity 회원 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 이름 : VARCHAR
+ - 비밀번호 : VARCHAR
+ - 별명 : VARCHAR
+ - 권한 : USER/ADMIN
+ - 적립금 : INT
+ - 전화번호 : VARCHAR
+}
+entity 쿠폰 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 유효일시 : DATETIME
+ - 만료일시 : DATETIME
+ - 이름 : VARCHAR
+ - 이름_en : VARCHAR
+ - 가격 : INT
+ - 상품ID : BIGINT
+}
+entity 회원_쿠폰 {
+ - 회원ID : BIGINT
+ - 쿠폰ID : BIGINT
+ - 생성일시 : DATETIME
+ - 유효일시 : DATETIME
+ - 만료일시 : DATETIME
+ - 사용일시 : DATETIME
+}
+entity 상품그룹 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 이름 : VARCHAR
+ - 이름_en : VARCHAR
+ - 카테고리 : BURGER/DESSRT/DRINK
+}
+entity 상품 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 가격 : INT
+ - 이름 : VARCHAR
+ - 이름_en : VARCHAR
+ - 이미지URL : VARCHAR
+ - 추천여부 : BOOLEAN
+ - 구분 : SINGLE/SET
+ - 상품그룹ID : BIGINT
+}
+entity 주문 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 주문코드 : VARCHAR
+ - 결제알시 : DATETIME
+ - 임시번호 : INT
+ - 총가격 : INT
+ - 방법 : HERE/TOGO
+ - 상태 : PAYING / PAID / PREPARING / PREPARED / RECEIVED / REFUNDED
+ - 회원ID : BIGINT
+}
+entity 주문품목   { 
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 가격 : INT
+ - 수량 : INT
+ - 주문ID : BIGINT
+ - 상품ID : BIGINT
+ - 디저트옵션ID : BIGINT
+ - 음료옵션ID : BIGINT
+ - 요청사항 : BIGINT
+}
+entity 옵션 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 가격 : INT
+ - 카테고리 : BURGER/DESSRT/DRINK
+ - 상품ID : BIGINT
+}
+entity 결제 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 카드종류 : VARCHAR
+ - 승인번호 : INT
+ - 가격 : INT
+ - 주문ID : BIGINT
+}
+entity 요청사항 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 내용 : VARCHAR
+ - 상품그룹ID : BIGINT
+ - 카테고리 : BURGER/DESSRT/DRINK
+ - 비트 : BIGINT
+}
+
+회원 |o.up.o{ 주문
+주문 ||-{ 주문품목
+주문 ||-left-o{ 결제
+
+주문품목 }o.right.o| 옵션
+주문품목 }o.right.o| 옵션
+주문품목 }o--||  상품
+
+상품 ||-up-o| 옵션
+
+상품그룹 ||-up-{ 상품
+상품그룹 ||-left-{ 요청사항
+
+회원 ||-right-o{ 회원_쿠폰
+회원_쿠폰 }o-right|| 쿠폰
+쿠폰 }o-right-|| 상품
+@enduml

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 상세</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/output.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<!-- 네비게이션바 -->
+<div th:replace="fragments/navbar :: navbarFragment"></div>
+
+<div class="m-1">
+    <div>상품 상세</div>
+    <table class="border-collapse text-center">
+        <thead>
+        <tr>
+            <th class="border border-black">ID</th>
+            <th class="border border-black">생성일시</th>
+            <th class="border border-black">이름</th>
+            <th class="border border-black">영어이름</th>
+            <th class="border border-black">가격</th>
+            <th class="border border-black">추천여부</th>
+            <th class="border border-black">상품분류</th>
+            <th class="border border-black">상품그룹</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <form name="productUpdateForm">
+                <td class="border border-black">
+                    <input class="w-16" name="productId" th:value="${product.id()}" disabled/>
+                </td>
+                <td class="border border-black p-1"
+                    th:text="${#temporals.format(product.createdAt(),'MM.dd HH:mm')}">
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="name" th:value="${product.name()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input class="w-32" name="nameEn" th:value="${product.nameEn()}" required/>
+                </td>
+                <td class="border border-black">
+                    <input type="number" class="w-16" name="price" th:value="${product.price()}" required/>
+                </td>
+                <td class="border border-black">
+                    <select name="recommended">
+                        <option value="false" th:selected="${!product.recommended()}">추천안함</option>
+                        <option value="true" th:selected="${product.recommended()}">추천</option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="type">
+                        <option th:each="type, status: ${types}" th:value="${type.name()}"
+                                th:text="${type.getValue_ko()}" th:selected="${product.type().equals(type)}">상품분류
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <select name="groupId">
+                        <option th:each="group, status: ${groups}" th:value="${group.id()}"
+                                th:text="${group.name()}" th:selected="${product.group().id() == group.id()}">상품그룹
+                        </option>
+                    </select>
+                </td>
+                <td class="border border-black">
+                    <input type="button" value="수정" onclick="updateProduct()"/>
+                </td>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a href="/products">목록으로</a>
+</div>
+
+<script>
+    const updateProduct = () => {
+        const form = document.forms["productUpdateForm"];
+        if (!form) return;
+        const productId = form["productId"];
+        const name = form["name"];
+        const nameEn = form["nameEn"];
+        const price = form["price"];
+        const recommended = form["recommended"];
+        const type = form["type"];
+        const groupId = form["groupId"];
+
+        const checkList = [
+            [productId, "상품 ID 정보에 문제가 있습니다."],
+            [name, "이름을 입력해 주세요."],
+            [nameEn, "영어이름을 입력해 주세요."],
+            [price, "가격을 입력해 주세요."],
+            [recommended, "추천여부를 선택해 주세요."],
+            [type, "상품분류를 선택해 주세요."],
+            [groupId, "상품그룹을 선택해 주세요."],
+        ];
+        for (const [input, label] of checkList) {
+            if (input.value === "") {
+                alert(label);
+                input.focus();
+                return;
+            }
+        }
+        fetch(`/api/product`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                productId: productId.value,
+                name: name.value,
+                nameEn: nameEn.value,
+                price: price.value,
+                recommended: recommended.value,
+                type: type.value,
+                groupId: groupId.value,
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 오류가 발생했습니다.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert(data);
+                location.href = "/products";
+            })
+            .catch(error => {
+                console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+            });
+    }
+</script>
+</body>
+</html>
