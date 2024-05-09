@@ -61,7 +61,7 @@
                 <td class="border border-black">
                     <select name="groupCategory">
                         <option th:each="group, status: ${groups}" th:value="${group.category().name()}"
-                                th:text="${group.category().getValue_ko()}">그룹
+                                th:text="|${group.name()}: ${group.category().getValue_ko()}|">그룹
                         </option>
                     </select>
                 </td>
@@ -78,8 +78,8 @@
 </div>
 
 <script>
-    const deleteOption = (id) => {
-        fetch(`/api/option?id=${id}`, {method: 'DELETE'})
+    const deleteRequest = (id) => {
+        fetch(`/api/request?id=${id}`, {method: 'DELETE'})
             .then(response => {
                 if (!response.ok) {
                     throw new Error('서버 오류가 발생했습니다.');
@@ -88,7 +88,7 @@
             })
             .then(data => {
                 alert(data);
-                location.href = "/options";
+                location.href = "/requests";
             })
             .catch(error => {
                 console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);

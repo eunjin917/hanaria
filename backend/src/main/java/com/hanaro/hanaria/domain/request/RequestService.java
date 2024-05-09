@@ -31,4 +31,10 @@ public class RequestService {
         List<Request> requestList = requestRepository.findAll();
         return requestList.stream().map(RequestFindAllResponseDto::new).toList();
     }
+
+    @Transactional
+    public boolean deleteById(Long id) {
+        requestRepository.deleteById(id);
+        return !requestRepository.existsById(id);
+    }
 }
