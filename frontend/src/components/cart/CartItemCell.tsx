@@ -17,11 +17,25 @@ function CartItemCell({
   onDelete,
 }: CartItemCellProps) {
   const countUp = () => {
-    onChange({ ...item, count: item.count + 1 }, index);
+    const newItem: LocalItemType = { ...item };
+    newItem.count += 1;
+    newItem.price =
+      ((newItem.product.price ?? 0) +
+        (newItem.dessertOption?.price ?? 0) +
+        (newItem.drinkOption?.price ?? 0)) *
+      newItem.count;
+    onChange(newItem, index);
   };
   const countDown = () => {
     if (item.count == 1) return;
-    onChange({ ...item, count: item.count - 1 }, index);
+    const newItem: LocalItemType = { ...item };
+    newItem.count -= 1;
+    newItem.price =
+      ((newItem.product.price ?? 0) +
+        (newItem.dessertOption?.price ?? 0) +
+        (newItem.drinkOption?.price ?? 0)) *
+      newItem.count;
+    onChange(newItem, index);
   };
   const deleteItem = () => {
     onDelete(index);
@@ -33,8 +47,8 @@ function CartItemCell({
     <VStack className="items-center w-28 hover:scale-105 transition-all cursor-pointer ">
       <div className="flex flex-col justify-center items-center bg-white w-24 h-24 rounded-xl shadowed">
         <button
-          className="absolute translate-x-12 -translate-y-12 rounded-full shadowed w-6 h-6 font-bold leading-none bg-red-500 text-white"
           onClick={deleteItem}
+          className="absolute translate-x-12 -translate-y-12 rounded-full shadowed w-6 h-6 font-bold leading-none bg-red-500 text-white"
         >
           X
         </button>

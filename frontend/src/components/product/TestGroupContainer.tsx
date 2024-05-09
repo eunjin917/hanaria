@@ -1,5 +1,5 @@
-import { HStack, VStack } from "../common/Stack";
-import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { HStack } from "../common/Stack";
+import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper"; // 타입지정을 위해 필요하다.
 // Import Swiper styles
 import "swiper/css";

@@ -24,6 +24,10 @@ function Products() {
     cartItemsDraft.splice(index, 1);
     setCartItems(cartItemsDraft);
   };
+  const totalPrice: number = cartItems.reduce(
+    (sum, item) => (sum += item.price),
+    0
+  );
 
   return (
     <VStack className="items-center w-full gap-0">
@@ -44,6 +48,7 @@ function Products() {
         </Button>
         <Button className="w-64 mx-2 bg-yellow-200 text-xl font-bold">
           주문하기
+          {cartItems.length > 0 ? ` (${totalPrice.toLocaleString()}원)` : ""}
         </Button>
       </HStack>
     </VStack>

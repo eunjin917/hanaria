@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import ProductType from "../../types/ProductType";
-import GroupType from "../../types/GroupType";
+import { useState } from "react";
 import { HStack, VStack } from "../common/Stack";
-import ProductSelector from "./ProductSelector";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
