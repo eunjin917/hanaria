@@ -145,7 +145,7 @@ function OrderBuilder({
         {isLumpSum != null && (
           <SwiperSlide className="flex flex-col my-2 items-center">
             <Title>주문 정보를 확인하세요.</Title>
-            <VStack className="bg-slate-100 w-full h-64 overflow-y-scroll mx-4 my-2 p-4 rounded-xl">
+            <VStack className="bg-slate-100 w-full h-60 overflow-y-scroll mx-4 mr-8 mt-2 mb-6 p-4 rounded-xl">
               <ReceiptLine title={"주문방법"} value={steps[0].label} />
               <Divider />
               <ReceiptLine title={"적립여부"} value={steps[1].label} />
