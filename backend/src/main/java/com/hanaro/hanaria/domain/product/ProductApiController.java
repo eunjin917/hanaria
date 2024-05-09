@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
-//@Secured({"ADMIN"})
 public class ProductApiController {
     private final ProductService productService;
 
