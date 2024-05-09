@@ -20,15 +20,15 @@ public class Request {
     @Id
     @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long request_id;
+    Long id;
     @Column(name = "request_created_at")
     @Builder.Default
     LocalDateTime createdAt = LocalDateTime.now();
     @Column(name = "request_body")
     String body;
     @ManyToOne
-    @Column(name = "group_id")
-    Group groupId;
+    @JoinColumn(name = "group_id")
+    Group group;
     @Column(name = "group_category")
     GroupCategory groupCategory;
     @Column(name = "request_bit")
