@@ -10,6 +10,8 @@ import { useState } from "react";
 import OrderBuilder from "../components/order/OrderBuilder";
 import OrderType from "../types/OrderType";
 import PaymentBuilder from "../components/order/PaymentBuilder";
+import LocalUserType from "../types/local/LocalUserType";
+import AuthPage from "../components/login/AuthPage";
 interface ProductsProps {
   onMain: () => void;
 }
@@ -22,6 +24,8 @@ function Products({ onMain }: ProductsProps) {
   const [isLumpSum, setIsLumpSum] = useState<boolean>(true);
   const [orderId, setOrderId] = useState<number | null>(null);
   const [orderCode, setOrderCode] = useState<string>("");
+  const [isLogining, setIsLogining] = useState<boolean>(false);
+  const [user, setUser] = useState<LocalUserType | null>(null);
   const appendCartItem = (item: LocalItemType) => {
     setCartItems([...cartItems, item]);
   };
@@ -79,7 +83,28 @@ function Products({ onMain }: ProductsProps) {
           />
         </Modal>
       )}
+      {isLogining && (
+        <Modal
+          onClose={() => {
+            setIsLogining(false);
+          }}
+        >
+          <AuthPage onLogin={setUser} />
+        </Modal>
+      )}
       <VStack className="items-center w-full gap-0">
+        {user == null ? (
+          <Button
+            className="absolute top-1 bg-red-300 font-bold py-1 rounded-md m-2"
+            onClick={() => setIsLogining(true)}
+          >
+            로그인하여 쿠폰 사용하기
+          </Button>
+        ) : (
+          <Button className="absolute top-1 bg-red-300 font-bold py-1 rounded-md m-2">
+            쿠폰 목록
+          </Button>
+        )}
         <TestGroupContainer onSelect={setSelectedGroup} />
         {selectedGroup && (
           <Modal onClose={() => setSelectedGroup(null)}>
