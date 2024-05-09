@@ -10,7 +10,7 @@ function Button({
 }: PropsWithChildren<ButtonProps>) {
   return (
     <button
-      className={`hover:scale-105 transition-all px-2 py-4 shadowed w-fit rounded-xl ${className}`}
+      className={`hover:scale-105 transition-all px-2 py-4 w-fit rounded-xl ${className}`}
       {...props}
     >
       {children}
