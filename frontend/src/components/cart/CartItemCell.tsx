@@ -5,10 +5,17 @@ interface CartItemCellProps {
   item: LocalItemType;
   index: number;
   onChange: (item: LocalItemType, index: number) => void;
+  onEdit: (item: LocalItemType, index: number) => void;
   onDelete: (index: number) => void;
 }
 
-function CartItemCell({ item, index, onChange, onDelete }: CartItemCellProps) {
+function CartItemCell({
+  item,
+  index,
+  onEdit,
+  onChange,
+  onDelete,
+}: CartItemCellProps) {
   const countUp = () => {
     onChange({ ...item, count: item.count + 1 }, index);
   };
@@ -19,8 +26,11 @@ function CartItemCell({ item, index, onChange, onDelete }: CartItemCellProps) {
   const deleteItem = () => {
     onDelete(index);
   };
+  const editItem = () => {
+    onEdit(item, index);
+  };
   return (
-    <VStack className="items-center w-32 hover:scale-105 transition-all cursor-pointer ">
+    <VStack className="items-center w-28 hover:scale-105 transition-all cursor-pointer ">
       <div className="flex flex-col justify-center items-center bg-white w-24 h-24 rounded-xl shadowed">
         <button
           className="absolute translate-x-12 -translate-y-12 rounded-full shadowed w-6 h-6 font-bold leading-none bg-red-500 text-white"
@@ -28,7 +38,7 @@ function CartItemCell({ item, index, onChange, onDelete }: CartItemCellProps) {
         >
           X
         </button>
-        <img src={item.product.image ?? ""} />
+        <img src={item.product.image ?? ""} onClick={editItem} />
       </div>
       <span className="text-center truncate font-bold">
         {item.product.name}

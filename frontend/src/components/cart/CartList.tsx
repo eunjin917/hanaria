@@ -5,6 +5,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import CartItemCell from "./CartItemCell";
+import { useState } from "react";
+import ItemEditor from "../product/ItemEditor";
+import Modal from "../common/Modal";
 
 interface CartListProps {
   items: LocalItemType[];
@@ -13,15 +16,42 @@ interface CartListProps {
 }
 
 function CartList({ items, onChange, onDelete }: CartListProps) {
+  const [itemToEdit, setItemToEdit] = useState<LocalItemType | null>(null);
+  const [indexToEdit, setIndexToEdit] = useState<number | null>(null);
+  const editItem = (item: LocalItemType, index: number) => {
+    setItemToEdit(item);
+    setIndexToEdit(index);
+  };
+  const cancelEditItem = () => {
+    setItemToEdit(null);
+    setIndexToEdit(null);
+  };
   return (
-    /* 장바구니 스와이퍼 */
     <div className="px-2 mb-2 w-full max-w-xl">
-      <Swiper slidesPerView={"auto"} className="bg-slate-100 py-5 rounded-xl">
+      {
+        // 장바구니 품목 수정 모달
+        itemToEdit && indexToEdit != null && (
+          <Modal onClose={cancelEditItem}>
+            <ItemEditor
+              item={itemToEdit}
+              index={indexToEdit}
+              onClose={cancelEditItem}
+              onSelect={onChange}
+            />
+          </Modal>
+        )
+      }
+      {/*  장바구니 스와이퍼 */}
+      <Swiper
+        slidesPerView={"auto"}
+        className="bg-slate-100 h-44 py-5 rounded-xl"
+      >
         {items.map((item, index) => (
-          <SwiperSlide key={index} className="!w-fit">
+          <SwiperSlide key={index} className="!w-fit transition-all">
             <CartItemCell
               item={item}
               index={index}
+              onEdit={editItem}
               onChange={onChange}
               onDelete={onDelete}
             />

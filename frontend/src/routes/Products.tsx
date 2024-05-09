@@ -5,7 +5,8 @@ import Modal from "../components/common/Modal";
 import ItemSelector from "../components/product/ItemSelector";
 import CartList from "../components/cart/CartList";
 import LocalItemType from "../types/local/LocalItemType";
-import { VStack } from "../components/common/Stack";
+import { HStack, VStack } from "../components/common/Stack";
+import Button from "../components/common/Button";
 
 function Products() {
   const [selectedGroup, setSelectedGroup] = useState<GroupType | null>();
@@ -25,7 +26,7 @@ function Products() {
   };
 
   return (
-    <VStack className="items-center w-full">
+    <VStack className="items-center w-full gap-0">
       <TestGroupContainer onSelect={setSelectedGroup} />
       {selectedGroup && (
         <Modal onClose={() => setSelectedGroup(null)}>
@@ -37,6 +38,14 @@ function Products() {
         </Modal>
       )}
       <CartList items={cartItems} onChange={changeItem} onDelete={deleteItem} />
+      <HStack>
+        <Button className="w-64 mx-2 bg-yellow-200 text-xl font-bold">
+          메인으로
+        </Button>
+        <Button className="w-64 mx-2 bg-yellow-200 text-xl font-bold">
+          주문하기
+        </Button>
+      </HStack>
     </VStack>
   );
 }

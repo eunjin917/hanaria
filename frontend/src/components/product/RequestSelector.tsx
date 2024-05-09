@@ -30,13 +30,13 @@ function RequestSelecor({ requests, onSelect }: RequestSelectorProps) {
         <button key={request.id} onClick={() => toggleRequest(request.bit)}>
           {requests & request.bit ? (
             <div
-              className={`text-start p-2 w-96 text-lg font-semibold text-black border border-blue-400 rounded-xl shadowed`}
+              className={`text-start p-2 w-96 text-md font-semibold text-black border border-blue-400 rounded-xl shadowed`}
             >
               {request.body}
             </div>
           ) : (
             <div
-              className={`text-start p-2 w-96 text-lg text-gray border border-transparent rounded-xl shadowed`}
+              className={`text-start p-2 w-96 text-md text-gray border border-transparent rounded-xl shadowed`}
             >
               {request.body}
             </div>
