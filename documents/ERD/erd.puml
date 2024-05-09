@@ -12,7 +12,10 @@ entity 회원 {
 entity 쿠폰 {
  - ID : BIGINT
  - 생성일시 : DATETIME
+ - 유효일시 : DATETIME
  - 만료일시 : DATETIME
+ - 이름 : VARCHAR
+ - 이름_en : VARCHAR
  - 가격 : INT
  - 상품ID : BIGINT
 }
@@ -20,7 +23,9 @@ entity 회원_쿠폰 {
  - 회원ID : BIGINT
  - 쿠폰ID : BIGINT
  - 생성일시 : DATETIME
+ - 유효일시 : DATETIME
  - 만료일시 : DATETIME
+ - 사용일시 : DATETIME
 }
 entity 상품그룹 {
  - ID : BIGINT
@@ -32,9 +37,9 @@ entity 상품그룹 {
 entity 상품 {
  - ID : BIGINT
  - 생성일시 : DATETIME
+ - 가격 : INT
  - 이름 : VARCHAR
  - 이름_en : VARCHAR
- - 가격 : INT
  - 이미지URL : VARCHAR
  - 추천여부 : BOOLEAN
  - 구분 : SINGLE/SET
@@ -44,7 +49,7 @@ entity 주문 {
  - ID : BIGINT
  - 생성일시 : DATETIME
  - 주문코드 : VARCHAR
- - 결제시간 : DATETIME
+ - 결제알시 : DATETIME
  - 임시번호 : INT
  - 총가격 : INT
  - 방법 : HERE/TOGO
@@ -66,6 +71,7 @@ entity 옵션 {
  - ID : BIGINT
  - 생성일시 : DATETIME
  - 가격 : INT
+ - 카테고리 : BURGER/DESSRT/DRINK
  - 상품ID : BIGINT
 }
 entity 결제 {
@@ -75,6 +81,14 @@ entity 결제 {
  - 승인번호 : INT
  - 가격 : INT
  - 주문ID : BIGINT
+}
+entity 요청사항 {
+ - ID : BIGINT
+ - 생성일시 : DATETIME
+ - 내용 : VARCHAR
+ - 상품그룹ID : BIGINT
+ - 카테고리 : BURGER/DESSRT/DRINK
+ - 비트 : BIGINT
 }
 
 회원 |o.up.o{ 주문
@@ -88,6 +102,7 @@ entity 결제 {
 상품 ||-up-o| 옵션
 
 상품그룹 ||-up-{ 상품
+상품그룹 ||-left-{ 요청사항
 
 회원 ||-right-o{ 회원_쿠폰
 회원_쿠폰 }o-right|| 쿠폰
