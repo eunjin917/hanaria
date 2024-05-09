@@ -101,7 +101,7 @@ function AuthPage({ onLogin }: AuthPageProps) {
             </label>
           </form>
           <Button className="py-1 bg-yellow-200 font-bold" onClick={() => {}}>
-            로그인
+            회원가입
           </Button>
         </VStack>
       )}
